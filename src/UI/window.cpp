@@ -1,6 +1,6 @@
-#include <interface/window.h>
+#include <UI/window.h>
 
-Interface::Window::Window(
+UI::Window::Window(
     std::string title,
     int xPosition,
     int yPosition,
@@ -26,12 +26,12 @@ Interface::Window::Window(
     );
 }
 
-Interface::Window::~Window()
+UI::Window::~Window()
 {
     SDL_DestroyWindow(window);
 }
 
-SDL_Window* Interface::Window::getWindow()
+SDL_Window* UI::Window::getWindow() const
 {
     return window;
 }

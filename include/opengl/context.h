@@ -2,7 +2,7 @@
 #define CONTEXT_H
 
 #include <SDL2/SDL.h>
-#include <interface/window.h>
+#include <UI/window.h>
 
 namespace OpenGL
 {
@@ -11,7 +11,7 @@ namespace OpenGL
         private:
             SDL_GLContext context;
         public:
-            Context(const Interface::Window &window);
+            Context(const UI::Window &window);
             ~Context();
     };
 }

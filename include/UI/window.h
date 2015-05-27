@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 
-namespace Interface
+namespace UI 
 {
     class Window
     {
@@ -26,7 +26,7 @@ namespace Interface
                 Uint32 windowFlags
             );
             ~Window();
-            SDL_Window* getWindow();
+            SDL_Window* getWindow() const;
     };
 }
 

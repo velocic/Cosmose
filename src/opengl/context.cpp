@@ -1,6 +1,6 @@
 #include <opengl/context.h>
 
-OpenGL::Context::Context(const Interface::Window &window)
+OpenGL::Context::Context(const UI::Window &window)
 {
     context = SDL_GL_CreateContext(window.getWindow());
 }

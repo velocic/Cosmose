@@ -1,13 +1,13 @@
 #include <opengl/context.h>
 #include <iostream>
-#include <interface/window.h>
+#include <UI/window.h>
 #include <SDL2/SDL.h>
 #include <string>
 
 int main()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
-    Interface::Window window(
+    UI::Window window(
         "Cosmose",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
