@@ -1,43 +1,81 @@
 #include <opengl/texture.h>
 
-OpenGL::Texture::Texture(std::vector<uint8_t> &png, GLuint textureUnit)
+OpenGL::Texture::Texture(
+    std::vector<unsigned char> &rawPNG,
+    int width,
+    int height,
+    GLuint wrapModeS,
+    GLuint wrapModeT,
+    GLuint minFilter,
+    GLuint magFilter,
+    bool generateMipmap
+)
 {
-    //create texture from png data
+    //use lodepng to decode the png data
+    std::vector<unsigned char> decodedPNG;
+    lodepng::decode(png, width, height, decodedPNG);
+
+    //create texture buffer
     glGenTextures(1, &textureID);
-    glActiveTexture(textureUnit);
     glBindTexture(GL_TEXTURE_2D, textureID);
-    //pass in the image data
-    // glTexImage2D(, (GLvoid *)png.data());
+
+    //configure the texture buffer
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapModeS);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapModeT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+
+    if (generateMipmap) {
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+
+    //pass the decoded image data to the texture buffer
+    glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_RGBA,
+        width,
+        height,
+        0,
+        GL_RGBA,
+        GL_UNSIGNED_BYTE,
+        (void *)decodedPNG.data()
+    );
+
+    //unbind the texture
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 OpenGL::Texture~Texture()
 {
-    //destroy texture
+    glDeleteTextures(1, &textureID);
 }
 
 void OpenGL::Texture::bind()
 {
-    //bind to the specified texture unit
-    //save the texture unit id for later
+    if (!isBound) {
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        isBound = true;
+    }
 }
 
 void OpenGL::Texture::unbind()
 {
-    //unbind the texture from the texture unit it is assigned to
-    //set the texture unit id to -1
+    glBindTexture(GL_TEXTURE_2D, 0);
+    isBound = false;
 }
 
 bool OpenGL::Texture::isBound()
 {
-    //return if the texture is currently bound, or not
+    return isBound;
 }
 
-void OpenGL::Texture::setWrapMode(GLuint textureWrapS, GLuint textureWrapT)
-{
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, textureWrapS);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, textureWrapT);
-}
-
-void OpenGL::Texture::setMinMagFilters(GLuint minFilter, GLuint magFilter)
-{
-}
+// void OpenGL::Texture::setWrapMode(GLuint textureWrapS, GLuint textureWrapT)
+// {
+//     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, textureWrapS);
+//     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, textureWrapT);
+// }
+//
+// void OpenGL::Texture::setMinMagFilters(GLuint minFilter, GLuint magFilter)
+// {
+// }
