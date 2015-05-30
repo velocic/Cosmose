@@ -1,7 +1,7 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include <gl3w.h>
+#include <GL/gl3w.h>
 #include <vector>
 #include <utilities/lodepng.h>
 

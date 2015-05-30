@@ -3,6 +3,8 @@
 #include <UI/window.h>
 #include <SDL2/SDL.h>
 #include <string>
+#include <utilities/assetcache.h>
+#include <utilities/ioutils.h>
 
 int main()
 {

@@ -5,7 +5,6 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
-#include <opengl/texture.h>
 #include <utilities/ioutils.h>
 
 namespace Utility
