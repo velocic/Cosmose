@@ -11,7 +11,6 @@ namespace OpenGL
     {
         private:
             GLuint textureID;
-            bool isBound = false;
         public:
             Texture(
                 std::vector<unsigned char> &rawPNG,
@@ -26,7 +25,6 @@ namespace OpenGL
             ~Texture();
             void bind(int textureUnit);
             void unbind();
-            bool isBound();
             // void setWrapMode(GLuint textureWrapS, GLuint textureWrapT);
             // void setMinMagFilters(GLuint minFilter, GLuint magFilter);
     };

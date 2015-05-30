@@ -53,21 +53,12 @@ OpenGL::Texture~Texture()
 
 void OpenGL::Texture::bind()
 {
-    if (!isBound) {
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        isBound = true;
-    }
+    glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
 void OpenGL::Texture::unbind()
 {
     glBindTexture(GL_TEXTURE_2D, 0);
-    isBound = false;
-}
-
-bool OpenGL::Texture::isBound()
-{
-    return isBound;
 }
 
 // void OpenGL::Texture::setWrapMode(GLuint textureWrapS, GLuint textureWrapT)
