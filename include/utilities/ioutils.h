@@ -8,7 +8,7 @@
 
 namespace IOUtils
 {
-    bool getFileContents(std::vector<unsigned char> &fileBuffer, std::string filePath);
+    bool getFileContents(std::vector<char> &fileBuffer, std::string filePath);
 }
 
 #endif
