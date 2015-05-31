@@ -14,8 +14,6 @@ namespace OpenGL
         public:
             Texture(
                 std::vector<unsigned char> &rawPNG,
-                int width,
-                int height,
                 GLuint wrapModeS,
                 GLuint wrapModeT,
                 GLuint minFilter,
