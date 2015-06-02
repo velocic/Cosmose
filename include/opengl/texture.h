@@ -3,7 +3,7 @@
 
 #include <GL/gl3w.h>
 #include <vector>
-#include <utilities/lodepng.h>
+#include <lodepng.h>
 
 namespace OpenGL
 {

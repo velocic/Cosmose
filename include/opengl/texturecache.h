@@ -4,7 +4,7 @@
 #include <string>
 #include <GL/gl3w.h>
 #include <opengl/texture.h>
-#include <utilties/assetcache.h>
+#include <utilities/assetcache.h>
 
 namespace OpenGL
 {
@@ -13,7 +13,7 @@ namespace OpenGL
         private:
             Utility::AssetCache<Texture> assetCache;
         public:
-            TextureCache() : assetCache(Utility::AssetCache assetCache) {};
+            TextureCache() {};
             std::shared_ptr<Texture> getTexture(std::string filePath);
             std::shared_ptr<Texture> loadTexture(
                 std::string filePath,

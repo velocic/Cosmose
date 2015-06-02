@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <utilities/assetcache.h>
+#include <opengl/texturecache.h>
 #include <utilities/ioutils.h>
 
 int main()
