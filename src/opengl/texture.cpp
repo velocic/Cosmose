@@ -66,13 +66,3 @@ void OpenGL::Texture::unbind()
 {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
-
-// void OpenGL::Texture::setWrapMode(GLuint textureWrapS, GLuint textureWrapT)
-// {
-//     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, textureWrapS);
-//     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, textureWrapT);
-// }
-//
-// void OpenGL::Texture::setMinMagFilters(GLuint minFilter, GLuint magFilter)
-// {
-// }

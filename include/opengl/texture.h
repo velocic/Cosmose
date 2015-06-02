@@ -23,8 +23,6 @@ namespace OpenGL
                 bool generateMipmap
             );
             void unbind();
-            // void setWrapMode(GLuint textureWrapS, GLuint textureWrapT);
-            // void setMinMagFilters(GLuint minFilter, GLuint magFilter);
     };
 }
 
