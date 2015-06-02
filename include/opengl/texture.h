@@ -12,16 +12,16 @@ namespace OpenGL
         private:
             GLuint textureID;
         public:
-            Texture(
-                std::vector<unsigned char> &rawPNG,
+            Texture(std::vector<char> &rawPNG);
+            ~Texture();
+            void bind(int textureUnit);
+            void setTextureParams(
                 GLuint wrapModeS,
                 GLuint wrapModeT,
                 GLuint minFilter,
                 GLuint magFilter,
                 bool generateMipmap
             );
-            ~Texture();
-            void bind(int textureUnit);
             void unbind();
             // void setWrapMode(GLuint textureWrapS, GLuint textureWrapT);
             // void setMinMagFilters(GLuint minFilter, GLuint magFilter);

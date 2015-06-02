@@ -1,33 +1,16 @@
 #include <opengl/texture.h>
 
-OpenGL::Texture::Texture(
-    std::vector<unsigned char> &rawPNG,
-    int width,
-    int height,
-    GLuint wrapModeS,
-    GLuint wrapModeT,
-    GLuint minFilter,
-    GLuint magFilter,
-    bool generateMipmap
-)
+OpenGL::Texture::Texture(std::vector<unsigned char> &rawPNG)
 {
     //use lodepng to decode the png data
-    std::vector<unsigned char> decodedPNG;
-    lodepng::decode(png, width, height, decodedPNG);
+    unsigned int width;
+    unsigned int height;
+    std::vector<char> decodedPNG;
+    lodepng::decode(decodedPNG, width, height, rawPNG);
 
     //create texture buffer
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_2D, textureID);
-
-    //configure the texture buffer
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapModeS);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapModeT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
-
-    if (generateMipmap) {
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
 
     //pass the decoded image data to the texture buffer
     glTexImage2D(
@@ -39,7 +22,7 @@ OpenGL::Texture::Texture(
         0,
         GL_RGBA,
         GL_UNSIGNED_BYTE,
-        (void *)decodedPNG.data()
+        decodedPNG.data()
     );
 
     //unbind the texture
@@ -54,6 +37,29 @@ OpenGL::Texture~Texture()
 void OpenGL::Texture::bind()
 {
     glBindTexture(GL_TEXTURE_2D, textureID);
+}
+
+void setTextureParams(
+    GLuint wrapModeS,
+    GLuint wrapModeT,
+    GLuint minFilter,
+    GLuint magFilter,
+    bool generateMipmap
+)
+{
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    //configure the texture buffer
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapModeS);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapModeT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+
+    if (generateMipmap) {
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void OpenGL::Texture::unbind()
