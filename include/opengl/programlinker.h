@@ -3,7 +3,7 @@
 
 #include <GL/gl3w.h>
 #include <iostream>
-#include <shader.h>
+#include <opengl/shader.h>
 #include <vector>
 
 class ProgramLinker
