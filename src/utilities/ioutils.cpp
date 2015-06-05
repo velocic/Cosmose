@@ -1,6 +1,6 @@
 #include <utilities/ioutils.h>
 
-bool IOUtils::getFileContents(std::vector<char> &fileBuffer, std::string filePath) {
+bool IOUtils::getFileContents(std::vector<unsigned char> &fileBuffer, std::string filePath) {
     std::ifstream inFileStream(filePath, std::ios::binary);
 
     if (!inFileStream) {

@@ -1,4 +1,4 @@
-#include <shader.h>
+#include <opengl/shader.h>
 
 Shader::~Shader()
 {

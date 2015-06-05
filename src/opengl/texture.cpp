@@ -5,7 +5,7 @@ OpenGL::Texture::Texture(std::vector<unsigned char> &rawPNG)
     //use lodepng to decode the png data
     unsigned int width;
     unsigned int height;
-    std::vector<char> decodedPNG;
+    std::vector<unsigned char> decodedPNG;
     lodepng::decode(decodedPNG, width, height, rawPNG);
 
     //create texture buffer

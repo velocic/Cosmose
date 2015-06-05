@@ -1,4 +1,4 @@
-#include <programlinker.h>
+#include <opengl/programlinker.h>
 
 ProgramLinker::~ProgramLinker()
 {

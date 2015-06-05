@@ -25,10 +25,10 @@ namespace Utility
                     //Found the key. Need to check if value is still a valid pointer
                     if (iterator->second.expired()) {
                         //Create new CacheItem, create a shared_ptr to it to return, and save a weak_ptr to it in iterator->second
-                        std::vector<char> fileContents;
+                        std::vector<unsigned char> fileContents;
                         IOUtils::getFileContents(fileContents, key); //need to check if this happened successfully
 
-                        CacheItem *item = new CacheItem(&fileContents);
+                        CacheItem *item = new CacheItem(fileContents);
                         std::shared_ptr<CacheItem> sharedItemPointer(item);
                         std::weak_ptr<CacheItem> cacheOwnedItemPointer(sharedItemPointer);
                         iterator->second = cacheOwnedItemPointer;
@@ -41,10 +41,10 @@ namespace Utility
                 }
 
                 //Key not found. Create a new CacheItem, store it in the cache with the given Key.
-                std::vector<char> fileContents;
+                std::vector<unsigned char> fileContents;
                 IOUtils::getFileContents(fileContents, key); //need to check if this happened successfully
 
-                CacheItem *item = new CacheItem(&fileContents);
+                CacheItem *item = new CacheItem(fileContents);
                 std::shared_ptr<CacheItem> sharedItemPointer(item);
                 std::weak_ptr<CacheItem> cacheOwnedItemPointer(sharedItemPointer);
                 cachedItems.insert(

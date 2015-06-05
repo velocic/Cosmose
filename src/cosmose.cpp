@@ -3,11 +3,13 @@
 #include <opengl/programlinker.h>
 #include <opengl/shader.h>
 #include <opengl/texturecache.h>
+#include <opengl/texture.h>
 #include <SDL2/SDL.h>
 #include <UI/window.h>
 #include <utilities/assetcache.h>
 #include <utilities/ioutils.h>
 #include <iostream>
+#include <memory>
 #include <string>
 
 int main()
@@ -25,16 +27,34 @@ int main()
         480,
         SDL_WINDOW_OPENGL
     );
-    //Set SDL OpenGL FLags
-    //Need to init gl3w here
-    if (!gl3wInit()) {
+    OpenGL::Context glContext(window);
+
+    if (gl3wInit()) {
         std::cout << "gl3w failed to initialize OpenGL" << std::endl;
         return EXIT_FAILURE;
     }
 
-    //Test tutorial snippet to see if texture loading works
-    //load shaders + link shader program
 
+    /*
+     * DEBUG DEBUG DEBUG
+     */
+    //Test tutorial snippet to see if texture loading works
+    Shader vertexShader(GL_VERTEX_SHADER, "src/shaders/test.vert");
+    Shader fragmentShader(GL_FRAGMENT_SHADER, "src/shaders/test.frag");
+    std::vector<Shader> shaders = {vertexShader, fragmentShader};
+    ProgramLinker program(shaders);
+    program.link();
+
+    OpenGL::TextureCache textureCache;
+
+    std::shared_ptr<OpenGL::Texture> texture = textureCache.loadTexture(
+        "hazard-rotated.png",
+        GL_REPEAT,
+        GL_REPEAT,
+        GL_LINEAR,
+        GL_LINEAR,
+        false
+    );
 
     GLfloat vertexData[] = {
         //  X     Y     Z       U     V
@@ -42,6 +62,24 @@ int main()
         -0.8f,-0.8f, 0.0f,   0.0f, 0.0f,
          0.8f,-0.8f, 0.0f,   1.0f, 0.0f,
     };
+    GLuint vbo = 0;
+    GLuint vao = 0;
+
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), NULL);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_TRUE, 5*sizeof(GLfloat), (const GLvoid *)(3 * sizeof(GLfloat)));
+
+    /*
+     * END DEBUG DEBUG DEBUG
+     */
+
 
     //Event loop
     SDL_Event e;
@@ -53,6 +91,18 @@ int main()
                 userRequestedExit = true;
             }
         }
+
+        /*
+         * DEBUG DRAW STUFF
+         */
+        glClearColor(0, 0, 1, 1);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        program.use();
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        SDL_GL_SwapWindow(window.getWindow());
+        /*
+         * END DEBUG DRAW STUFF
+         */
     }
 
     SDL_Quit();

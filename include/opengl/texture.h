@@ -12,7 +12,7 @@ namespace OpenGL
         private:
             GLuint textureID;
         public:
-            Texture(std::vector<char> &rawPNG);
+            Texture(std::vector<unsigned char> &rawPNG);
             ~Texture();
             void bind(int textureUnit);
             void setTextureParams(
