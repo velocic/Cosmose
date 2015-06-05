@@ -14,7 +14,7 @@ namespace OpenGL
         public:
             Texture(std::vector<unsigned char> &rawPNG);
             ~Texture();
-            void bind(int textureUnit);
+            void bind();
             void setTextureParams(
                 GLuint wrapModeS,
                 GLuint wrapModeT,

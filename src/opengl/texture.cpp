@@ -29,7 +29,7 @@ OpenGL::Texture::Texture(std::vector<unsigned char> &rawPNG)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-OpenGL::Texture~Texture()
+OpenGL::Texture::~Texture()
 {
     glDeleteTextures(1, &textureID);
 }
@@ -39,7 +39,7 @@ void OpenGL::Texture::bind()
     glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
-void setTextureParams(
+void OpenGL::Texture::setTextureParams(
     GLuint wrapModeS,
     GLuint wrapModeT,
     GLuint minFilter,
