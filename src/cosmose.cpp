@@ -44,6 +44,7 @@ int main()
     std::vector<Shader> shaders = {vertexShader, fragmentShader};
     ProgramLinker program(shaders);
     program.link();
+    program.use();
 
     OpenGL::TextureCache textureCache;
 
@@ -101,7 +102,6 @@ int main()
          */
         glClearColor(0, 0, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        program.use();
         glDrawArrays(GL_TRIANGLES, 0, 3);
         SDL_GL_SwapWindow(window.getWindow());
         /*
