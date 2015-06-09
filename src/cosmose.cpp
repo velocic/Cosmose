@@ -56,6 +56,10 @@ int main()
         false
     );
 
+    glActiveTexture(GL_TEXTURE0);
+    texture->bind();
+    //need to set the texture into the uniform2d of fragment shader
+
     GLfloat vertexData[] = {
         //  X     Y     Z       U     V
          0.0f, 0.8f, 0.0f,   0.5f, 1.0f,

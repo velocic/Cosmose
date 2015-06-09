@@ -10,9 +10,9 @@
 class Shader
 {
     private:
+        GLenum shaderType;
         std::string sourceFilePath;
         std::string shaderSource;
-        GLenum shaderType;
         void importSourceFromFile(std::string &shaderSource, const std::string &sourceFilePath);
         void logCompilationError(const GLuint &shader);
     public:

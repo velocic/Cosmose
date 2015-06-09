@@ -12,7 +12,7 @@ bool IOUtils::getFileContents(std::vector<unsigned char> &fileBuffer, std::strin
     inFileStream.seekg(0, std::ios::beg);
 
     fileBuffer.resize(fileLength);
-    inFileStream.read(&fileBuffer[0], fileLength);
+    inFileStream.read(reinterpret_cast<char *>(fileBuffer.data()), fileLength);
 
     return true;
 }
