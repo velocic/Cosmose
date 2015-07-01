@@ -6,9 +6,12 @@
 #include <fstream>
 #include <iterator>
 
-namespace IOUtils
+namespace Utility
 {
-    bool getFileContents(std::vector<unsigned char> &fileBuffer, std::string filePath);
+    namespace IOUtils
+    {
+        bool getFileContents(std::vector<unsigned char> &fileBuffer, std::string filePath);
+    }
 }
 
 #endif
