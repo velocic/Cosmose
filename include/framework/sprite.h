@@ -6,10 +6,6 @@
 #include <opengl/texture.h>
 #include <memory>
 
-#include <iostream>
-#include <string>
-#include <glm/gtx/string_cast.hpp>
-
 namespace Framework
 {
     class Sprite
