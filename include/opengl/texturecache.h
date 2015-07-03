@@ -1,10 +1,11 @@
 #ifndef TEXTURECACHE_H
 #define TEXTURECACHE_H
 
-#include <string>
 #include <GL/gl3w.h>
 #include <opengl/texture.h>
 #include <utilities/assetcache.h>
+#include <memory>
+#include <string>
 
 namespace OpenGL
 {

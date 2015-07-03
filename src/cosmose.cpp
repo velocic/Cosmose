@@ -1,4 +1,5 @@
 #include <GL/gl3w.h>
+#include <framework/sprite.h>
 #include <opengl/context.h>
 #include <opengl/programlinker.h>
 #include <opengl/shader.h>
@@ -34,7 +35,6 @@ int main()
         return EXIT_FAILURE;
     }
 
-
     /*
      * DEBUG DEBUG DEBUG
      */
@@ -56,6 +56,9 @@ int main()
         GL_LINEAR,
         false
     );
+
+    // Framework::Sprite testSprite(texture);
+    // testSprite.rotate();
 
     glActiveTexture(GL_TEXTURE0);
     texture->bind();
