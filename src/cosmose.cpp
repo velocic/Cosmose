@@ -34,6 +34,15 @@ int main()
         std::cout << "gl3w failed to initialize OpenGL" << std::endl;
         return EXIT_FAILURE;
     }
+    
+    //Test out drawing sprites
+    //load a texture
+    //buffer a quad
+    //buffer some UV coordinates
+    //buffer the sprite's model matrix
+    //send the model matrix through shader uniform
+    //render a scaled + translated sprite
+    //end test out drawing sprites
 
     //Event loop
     SDL_Event e;
