@@ -1,11 +1,12 @@
 #version 330
-in vec3 vert;
-in vec2 vertTexCoord;
-out vec2 fragTexCoord;
+layout (location = 0)in vec2 vertex;
+layout (location = 1)in vec2 uvCoordinate;
+uniform vec4 modelMatrix;
+out vec2 fragmentUVCoordinate;
 
 void main()
 {
-    fragTexCoord = vertTexCoord;
-
-    gl_Position = vec4(vert, 1);
+    fragmentUVCoordinate = uvCoordinate;
+    vec4 expandedVertex = vec4(vertex, 0, 1);
+    gl_Position = expandedVertex * modelMatrix;
 }

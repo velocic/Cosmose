@@ -12,6 +12,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <vector>
 
 int main()
 {
@@ -35,14 +36,49 @@ int main()
         return EXIT_FAILURE;
     }
     
-    //Test out drawing sprites
+    //testing sprite drawing
+    Shader basicSpriteVertexShader(GL_VERTEX_SHADER, "src/shaders/basicsprite.vert");
+    Shader basicSpriteFragmentShader(GL_FRAGMENT_SHADER, "src/shaders/basicsprite.frag");
+    std::vector<Shader> shaders = {basicSpriteVertexShader, basicSpriteFragmentShader};
+    ProgramLinker basicSpriteShaderProgram(shaders);
+    basicSpriteShaderProgram.link();
+    basicSpriteShaderProgram.use();
+
     //load a texture
-    //buffer a quad
-    //buffer some UV coordinates
-    //buffer the sprite's model matrix
-    //send the model matrix through shader uniform
-    //render a scaled + translated sprite
-    //end test out drawing sprites
+    OpenGL::TextureCache textureCache;
+    textureCache.loadTexture(
+        "demotexture.png",
+        GL_CLAMP_TO_BORDER,
+        GL_CLAMP_TO_BORDER,
+        GL_LINEAR,
+        GL_LINEAR,
+        false
+    );
+    std::shared_ptr<OpenGL::Texture> texturePointer = textureCache.getTexture("demotexture.png");
+
+    float modelCoordinatesAndUVData[] = {
+        //x,y,u,v
+        0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 1.0f,
+        0.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f
+    };
+    //VBO, VAO, Vertex Coordinates, UV Coordinates, Texture, Uniform matrix, shader program
+    GLuint modelBuffer;
+    glGenBuffers(1, &modelBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, modelBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(modelCoordinatesAndUVData), modelCoordinatesAndUVData, GL_STATIC_DRAW);
+
+    GLuint basicShaderVertexArray;
+    glGenVertexArrays(1, &basicShaderVertexArray);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (GLvoid *)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (GLvoid *)(2*sizeof(float)));
+    GLuint modelMatrixUniformLocation = basicSpriteShaderProgram.getUniformLocation("modelMatrix");
+    //end setup for testing sprite drawing
 
     //Event loop
     SDL_Event e;
