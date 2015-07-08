@@ -47,16 +47,17 @@ int main()
 
     //load a texture
     OpenGL::TextureCache textureCache;
-    textureCache.loadTexture(
-        "demotexture.png",
-        GL_CLAMP_TO_BORDER,
-        GL_CLAMP_TO_BORDER,
-        GL_NEAREST,
-        GL_NEAREST,
-        false
+
+    Framework::Sprite demoSprite(
+        textureCache.loadTexture(
+            "./demotexture.png",
+            GL_REPEAT,
+            GL_REPEAT,
+            GL_NEAREST,
+            GL_NEAREST,
+            false
+        )
     );
-    std::shared_ptr<OpenGL::Texture> texturePointer = textureCache.getTexture("demotexture.png");
-    Framework::Sprite demoSprite(texturePointer);
     demoSprite.getTexture()->bind();
 
     float modelCoordinatesAndUVData[] = {
