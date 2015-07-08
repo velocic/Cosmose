@@ -51,9 +51,9 @@ int main()
         "demotexture.png",
         GL_CLAMP_TO_BORDER,
         GL_CLAMP_TO_BORDER,
-        GL_LINEAR,
-        GL_LINEAR,
-        true
+        GL_NEAREST,
+        GL_NEAREST,
+        false
     );
     std::shared_ptr<OpenGL::Texture> texturePointer = textureCache.getTexture("demotexture.png");
     Framework::Sprite demoSprite(texturePointer);
@@ -97,7 +97,7 @@ int main()
         glUniform4fv(modelMatrixUniformLocation, 1, glm::value_ptr(demoSprite.getModelMatrix()));
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glDrawArrays(GL_TRIANGLES, 0, 2);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
         SDL_GL_SwapWindow(window.getWindow());
     }
 
