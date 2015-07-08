@@ -1,5 +1,6 @@
 #include <GL/gl3w.h>
 #include <framework/sprite.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <opengl/context.h>
 #include <opengl/programlinker.h>
 #include <opengl/shader.h>
@@ -52,9 +53,11 @@ int main()
         GL_CLAMP_TO_BORDER,
         GL_LINEAR,
         GL_LINEAR,
-        false
+        true
     );
     std::shared_ptr<OpenGL::Texture> texturePointer = textureCache.getTexture("demotexture.png");
+    Framework::Sprite demoSprite(texturePointer);
+    demoSprite.getTexture()->bind();
 
     float modelCoordinatesAndUVData[] = {
         //x,y,u,v
@@ -73,6 +76,7 @@ int main()
 
     GLuint basicShaderVertexArray;
     glGenVertexArrays(1, &basicShaderVertexArray);
+    glBindVertexArray(basicShaderVertexArray);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (GLvoid *)0);
     glEnableVertexAttribArray(1);
@@ -90,6 +94,11 @@ int main()
                 userRequestedExit = true;
             }
         }
+        glUniform4fv(modelMatrixUniformLocation, 1, glm::value_ptr(demoSprite.getModelMatrix()));
+        glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glDrawArrays(GL_TRIANGLES, 0, 2);
+        SDL_GL_SwapWindow(window.getWindow());
     }
 
     SDL_Quit();
