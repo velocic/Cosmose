@@ -1,5 +1,5 @@
 #include <GL/gl3w.h>
-#include <framework/sprite.h>
+#include <framework/sprite/basicsprite.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <opengl/context.h>
 #include <opengl/programlinker.h>
@@ -48,7 +48,7 @@ int main()
     //load a texture
     OpenGL::TextureCache textureCache;
 
-    Framework::Sprite demoSprite(
+    Framework::Sprite::BasicSprite demoSprite(
         textureCache.loadTexture(
             "./demotexture.png",
             GL_REPEAT,
