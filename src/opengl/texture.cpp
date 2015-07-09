@@ -39,6 +39,16 @@ void OpenGL::Texture::bind()
     glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
+std::string OpenGL::Texture::getName()
+{
+    return textureName;
+}
+
+void OpenGL::Texture::setName(std::string textureName)
+{
+    this->textureName = textureName;
+}
+
 void OpenGL::Texture::setTextureParams(
     GLuint wrapModeS,
     GLuint wrapModeT,

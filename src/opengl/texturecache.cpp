@@ -22,6 +22,7 @@ std::shared_ptr<OpenGL::Texture> OpenGL::TextureCache::loadTexture(
         magFilter,
         generateMipmap
     );
+    texture->setName(filePath);
     
     return texture;
 }
