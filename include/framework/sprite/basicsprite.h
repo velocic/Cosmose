@@ -25,7 +25,7 @@ namespace Framework
                     std::shared_ptr<OpenGL::Texture> spriteTexture
                 ) : spriteTexture(spriteTexture) {}
                 glm::mat4 getModelMatrix();
-                std::shared_ptr<OpenGL::Texture> getTexture();
+                std::shared_ptr<OpenGL::Texture> getTexture() const;
                 void rotate(float rotationAngle, glm::vec3 rotationAxis);
                 void scale(glm::vec3 scaleVector);
                 void translate(glm::vec3 translationVector);

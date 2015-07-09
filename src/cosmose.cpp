@@ -1,4 +1,5 @@
 #include <GL/gl3w.h>
+#include <framework/renderer/instancerenderer.h>
 #include <framework/sprite/basicsprite.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <opengl/context.h>

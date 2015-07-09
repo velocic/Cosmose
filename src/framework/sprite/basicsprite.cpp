@@ -5,7 +5,7 @@ glm::mat4 Framework::Sprite::BasicSprite::getModelMatrix()
     return modelMatrix;
 }
 
-std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture()
+std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() const
 {
     return spriteTexture;
 }

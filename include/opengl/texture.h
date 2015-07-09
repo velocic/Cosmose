@@ -17,7 +17,7 @@ namespace OpenGL
             Texture(std::vector<unsigned char> &rawPNG);
             ~Texture();
             void bind();
-            std::string getName();
+            std::string getName() const;
             void setName(std::string textureName);
             void setTextureParams(
                 GLuint wrapModeS,

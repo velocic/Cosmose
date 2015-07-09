@@ -15,11 +15,11 @@ namespace Framework
             private:
                 ProgramLinker shaderProgram;
             public:
-                Instance(ProgramLinker shaderProgram)
+                InstanceRenderer(ProgramLinker shaderProgram)
                     : shaderProgram(shaderProgram) {}
                 void render(std::vector<Framework::Sprite::BasicSprite> &spriteCollection);
                 void sortSpriteCollectionByTexture(std::vector<Framework::Sprite::BasicSprite> &spriteCollection);
-        }
+        };
     }
 }
 

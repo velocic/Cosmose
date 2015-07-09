@@ -39,7 +39,7 @@ void OpenGL::Texture::bind()
     glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
-std::string OpenGL::Texture::getName()
+std::string OpenGL::Texture::getName() const
 {
     return textureName;
 }
