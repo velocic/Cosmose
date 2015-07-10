@@ -73,8 +73,10 @@ int main()
             false
         )
     );
+    Framework::Sprite::BasicSprite demoSprite2 = demoSprite;
+    demoSprite2.translate(glm::vec3(-.5, -.5, 0));
 
-    std::vector<Framework::Sprite::BasicSprite> spriteCollection = {demoSprite};
+    std::vector<Framework::Sprite::BasicSprite> spriteCollection = {demoSprite, demoSprite2};
 
     Framework::Renderer::InstanceRenderer renderer(basicSpriteShaderProgram, modelBuffer);
 
