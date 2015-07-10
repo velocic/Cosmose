@@ -2,6 +2,7 @@
 #define INSTANCERENDERER_H
 
 #include <framework/sprite/basicsprite.h>
+#include <glm/glm.hpp>
 #include <opengl/programlinker.h>
 #include <algorithm>
 #include <vector>
@@ -14,9 +15,12 @@ namespace Framework
         {
             private:
                 ProgramLinker shaderProgram;
+                GLuint modelDataBuffer;
+                GLuint instanceDataBuffer;
+                GLuint instanceDataArray;
             public:
-                InstanceRenderer(ProgramLinker shaderProgram)
-                    : shaderProgram(shaderProgram) {}
+                InstanceRenderer(ProgramLinker shaderProgram, GLuint modelDataBuffer);
+                ~InstanceRenderer();
                 void render(std::vector<Framework::Sprite::BasicSprite> &spriteCollection);
                 void sortSpriteCollectionByTexture(std::vector<Framework::Sprite::BasicSprite> &spriteCollection);
         };
