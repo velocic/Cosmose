@@ -49,7 +49,7 @@ void Framework::Renderer::InstanceRenderer::render(std::vector<Framework::Sprite
 
 
     //unbind buffers
-    shaderProgram.unuse();
+    // shaderProgram.unuse();
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

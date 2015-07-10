@@ -74,7 +74,7 @@ int main()
         )
     );
     Framework::Sprite::BasicSprite demoSprite2 = demoSprite;
-    demoSprite2.translate(glm::vec3(-.5, -.5, 0));
+    demoSprite2.translate(glm::vec3(-1, -1, 0));
 
     std::vector<Framework::Sprite::BasicSprite> spriteCollection = {demoSprite, demoSprite2};
 
