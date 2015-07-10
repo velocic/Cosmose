@@ -54,26 +54,30 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     //testing sprite drawing
-    // Shader basicSpriteVertexShader(GL_VERTEX_SHADER, "src/shaders/basicsprite.vert");
-    // Shader basicSpriteFragmentShader(GL_FRAGMENT_SHADER, "src/shaders/basicsprite.frag");
-    // std::vector<Shader> shaders = {basicSpriteVertexShader, basicSpriteFragmentShader};
-    // ProgramLinker basicSpriteShaderProgram(shaders);
-    // basicSpriteShaderProgram.link();
-    // basicSpriteShaderProgram.use();
-    //
-    // //load a texture
-    // OpenGL::TextureCache textureCache;
-    //
-    // Framework::Sprite::BasicSprite demoSprite(
-    //     textureCache.loadTexture(
-    //         "./demotexture.png",
-    //         GL_REPEAT,
-    //         GL_REPEAT,
-    //         GL_NEAREST,
-    //         GL_NEAREST,
-    //         false
-    //     )
-    // );
+    Shader basicSpriteVertexShader(GL_VERTEX_SHADER, "src/shaders/instancedsprite.vert");
+    Shader basicSpriteFragmentShader(GL_FRAGMENT_SHADER, "src/shaders/instancedsprite.frag");
+    std::vector<Shader> shaders = {basicSpriteVertexShader, basicSpriteFragmentShader};
+    ProgramLinker basicSpriteShaderProgram(shaders);
+    basicSpriteShaderProgram.link();
+    basicSpriteShaderProgram.use();
+
+    //load a texture
+    OpenGL::TextureCache textureCache;
+    Framework::Sprite::BasicSprite demoSprite(
+        textureCache.loadTexture(
+            "./demotexture.png",
+            GL_REPEAT,
+            GL_REPEAT,
+            GL_NEAREST,
+            GL_NEAREST,
+            false
+        )
+    );
+
+    std::vector<Framework::Sprite::BasicSprite> spriteCollection = {demoSprite};
+
+    Framework::Renderer::InstanceRenderer renderer(basicSpriteShaderProgram, modelBuffer);
+
     // demoSprite.getTexture()->bind();
     //
     //
@@ -100,6 +104,7 @@ int main()
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // glDrawArrays(GL_TRIANGLES, 0, 6);
+        renderer.render(spriteCollection);
         SDL_GL_SwapWindow(window.getWindow());
     }
 
