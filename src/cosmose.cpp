@@ -27,9 +27,9 @@ int main()
         "Cosmose",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        640,
-        480,
-        SDL_WINDOW_OPENGL
+        1920,
+        1080,
+        SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN
     );
     OpenGL::Context glContext(window);
 
@@ -74,9 +74,19 @@ int main()
         )
     );
     Framework::Sprite::BasicSprite demoSprite2 = demoSprite;
+    demoSprite2.scale(glm::vec3(.20, .20, 0));
     demoSprite2.translate(glm::vec3(-1, -1, 0));
+    demoSprite2.getTexture()->bind();
 
     std::vector<Framework::Sprite::BasicSprite> spriteCollection = {demoSprite, demoSprite2};
+    for (int i = 0; i < 10000; ++i) {
+        spriteCollection.push_back(demoSprite2);
+    }
+
+    std::vector<glm::mat4> spriteModelMatrices;
+    for (auto sprite : spriteCollection) {
+        spriteModelMatrices.push_back(sprite.getModelMatrix());
+    }
 
     Framework::Renderer::InstanceRenderer renderer(basicSpriteShaderProgram, modelBuffer);
 
@@ -106,7 +116,7 @@ int main()
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // glDrawArrays(GL_TRIANGLES, 0, 6);
-        renderer.render(spriteCollection);
+        renderer.render(spriteModelMatrices);
         SDL_GL_SwapWindow(window.getWindow());
     }
 

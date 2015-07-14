@@ -21,7 +21,7 @@ namespace Framework
             public:
                 InstanceRenderer(ProgramLinker shaderProgram, GLuint modelDataBuffer);
                 ~InstanceRenderer();
-                void render(std::vector<Framework::Sprite::BasicSprite> &spriteCollection);
+                void render(std::vector<glm::mat4> &spriteModelMatrices);
                 void sortSpriteCollectionByTexture(std::vector<Framework::Sprite::BasicSprite> &spriteCollection);
         };
     }
