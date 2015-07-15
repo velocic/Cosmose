@@ -1,4 +1,3 @@
-#include <framework/sprite/spriteinstancedata.h>
 #include <GL/gl3w.h>
 #include <opengl/context.h>
 #include <SDL2/SDL.h>
@@ -6,10 +5,13 @@
 #include <utilities/assetcache.h>
 #include <utilities/ioutils.h>
 #include <iostream>
-#include <memory>
 #include <string>
 #include <vector>
 
+#include <framework/sprite/basicsprite.h>
+#include <framework/sprite/spriteinstancedata.h>
+#include <opengl/texturecache.h>
+#include <memory>
 int main()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
@@ -47,6 +49,22 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, modelBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    //DEBUG
+    OpenGL::TextureCache cache;
+    std::shared_ptr<OpenGL::Texture> texture = cache.loadTexture(
+        "demotexture.png",
+        GL_REPEAT,
+        GL_REPEAT,
+        GL_LINEAR,
+        GL_LINEAR,
+        false
+    );
+    Framework::Sprite::SpriteInstanceData instanceData;
+    instanceData.colorModifier.r = 0.75f;
+    Framework::Sprite::BasicSprite testSprite(texture, instanceData, 5);
+    std::cout << testSprite.getInstanceID() << std::endl;
+    //END DEBUG
 
     //Event loop
     SDL_Event e;

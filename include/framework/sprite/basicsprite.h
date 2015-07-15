@@ -1,8 +1,8 @@
 #ifndef BASICSPRITE_H
 #define BASICSPRITE_H
 
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <framework/sprite/spriteinstancedata.h>
 #include <opengl/texture.h>
 #include <memory>
 
@@ -14,17 +14,20 @@ namespace Framework
         {
             private:
                 std::shared_ptr<OpenGL::Texture> spriteTexture;
-                glm::mat4 modelMatrix;
+                SpriteInstanceData instanceData;
+                unsigned int instanceID;
             public:
                 BasicSprite(
                     std::shared_ptr<OpenGL::Texture> spriteTexture,
-                    glm::mat4 modelMatrix
-                ) : modelMatrix(modelMatrix),
-                    spriteTexture(spriteTexture) {}
-                BasicSprite(
-                    std::shared_ptr<OpenGL::Texture> spriteTexture
-                ) : spriteTexture(spriteTexture) {}
-                glm::mat4 getModelMatrix();
+                    SpriteInstanceData &instanceData,
+                    unsigned int instanceID
+                ) :
+                    spriteTexture(spriteTexture),
+                    instanceData(instanceData),
+                    instanceID(instanceID)
+                {}
+                const SpriteInstanceData &getInstanceData() const;
+                unsigned int getInstanceID() const;
                 std::shared_ptr<OpenGL::Texture> getTexture() const;
                 void rotate(float rotationAngle, glm::vec3 rotationAxis);
                 void scale(glm::vec3 scaleVector);

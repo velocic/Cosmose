@@ -1,8 +1,13 @@
 #include <framework/sprite/basicsprite.h>
 
-glm::mat4 Framework::Sprite::BasicSprite::getModelMatrix()
+const Framework::Sprite::SpriteInstanceData &Framework::Sprite::BasicSprite::getInstanceData() const
 {
-    return modelMatrix;
+    return instanceData;
+}
+
+unsigned int Framework::Sprite::BasicSprite::getInstanceID() const
+{
+    return instanceID;
 }
 
 std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() const
@@ -12,15 +17,15 @@ std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() co
 
 void Framework::Sprite::BasicSprite::rotate(float rotationAngle, glm::vec3 rotationAxis)
 {
-    modelMatrix = glm::rotate(modelMatrix, rotationAngle, rotationAxis);
+    instanceData.MVPMatrix = glm::rotate(instanceData.MVPMatrix, rotationAngle, rotationAxis);
 }
 
 void Framework::Sprite::BasicSprite::scale(glm::vec3 scaleVector)
 {
-    modelMatrix = glm::scale(modelMatrix, scaleVector);
+    instanceData.MVPMatrix = glm::scale(instanceData.MVPMatrix, scaleVector);
 }
 
 void Framework::Sprite::BasicSprite::translate(glm::vec3 translationVector)
 {
-    modelMatrix = glm::translate(modelMatrix, translationVector);
+    instanceData.MVPMatrix = glm::translate(instanceData.MVPMatrix, translationVector);
 }
