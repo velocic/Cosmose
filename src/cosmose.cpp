@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include <glm/gtx/string_cast.hpp>
 #include <framework/sprite/basicsprite.h>
 #include <framework/sprite/spriteinstancedata.h>
 #include <opengl/texturecache.h>
@@ -64,6 +65,9 @@ int main()
     instanceData.colorModifier.r = 0.75f;
     Framework::Sprite::BasicSprite testSprite(texture, instanceData, 5);
     std::cout << testSprite.getInstanceID() << std::endl;
+    std::cout << glm::to_string(testSprite.getInstanceData().colorModifier) << std::endl;
+    instanceData.colorModifier.b = 0.44;
+    std::cout << glm::to_string(testSprite.getInstanceData().colorModifier) << std::endl;
     //END DEBUG
 
     //Event loop
