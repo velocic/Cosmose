@@ -1,12 +1,6 @@
+#include <framework/sprite/spriteinstancedata.h>
 #include <GL/gl3w.h>
-#include <framework/renderer/instancerenderer.h>
-#include <framework/sprite/basicsprite.h>
-#include <glm/gtc/type_ptr.hpp>
 #include <opengl/context.h>
-#include <opengl/programlinker.h>
-#include <opengl/shader.h>
-#include <opengl/texturecache.h>
-#include <opengl/texture.h>
 #include <SDL2/SDL.h>
 #include <UI/window.h>
 #include <utilities/assetcache.h>
@@ -27,9 +21,9 @@ int main()
         "Cosmose",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        1920,
-        1080,
-        SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN
+        640,
+        480,
+        SDL_WINDOW_OPENGL
     );
     OpenGL::Context glContext(window);
 
@@ -38,6 +32,7 @@ int main()
         return EXIT_FAILURE;
     }
     //Buffer a quad that will be used for ALL sprites (scaled, rotated, and transformed as needed)
+    //Note: needs to be modified to only use 4 points to work properly with SpriteTextureData struct
     float quadVertices[] = {
         //x,y
         0.0f, 0.0f,
@@ -53,55 +48,6 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    //testing sprite drawing
-    Shader basicSpriteVertexShader(GL_VERTEX_SHADER, "src/shaders/instancedsprite.vert");
-    Shader basicSpriteFragmentShader(GL_FRAGMENT_SHADER, "src/shaders/instancedsprite.frag");
-    std::vector<Shader> shaders = {basicSpriteVertexShader, basicSpriteFragmentShader};
-    ProgramLinker basicSpriteShaderProgram(shaders);
-    basicSpriteShaderProgram.link();
-    basicSpriteShaderProgram.use();
-
-    //load a texture
-    OpenGL::TextureCache textureCache;
-    Framework::Sprite::BasicSprite demoSprite(
-        textureCache.loadTexture(
-            "./demotexture.png",
-            GL_REPEAT,
-            GL_REPEAT,
-            GL_NEAREST,
-            GL_NEAREST,
-            false
-        )
-    );
-    Framework::Sprite::BasicSprite demoSprite2 = demoSprite;
-    demoSprite2.scale(glm::vec3(.20, .20, 0));
-    demoSprite2.translate(glm::vec3(-1, -1, 0));
-    demoSprite2.getTexture()->bind();
-
-    std::vector<Framework::Sprite::BasicSprite> spriteCollection = {demoSprite, demoSprite2};
-    for (int i = 0; i < 10000; ++i) {
-        spriteCollection.push_back(demoSprite2);
-    }
-
-    std::vector<glm::mat4> spriteModelMatrices;
-    for (auto sprite : spriteCollection) {
-        spriteModelMatrices.push_back(sprite.getModelMatrix());
-    }
-
-    Framework::Renderer::InstanceRenderer renderer(basicSpriteShaderProgram, modelBuffer);
-
-    // demoSprite.getTexture()->bind();
-    //
-    //
-    // GLuint basicShaderVertexArray;
-    // glGenVertexArrays(1, &basicShaderVertexArray);
-    // glBindVertexArray(basicShaderVertexArray);
-    // glEnableVertexAttribArray(0);
-    // glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid *)0);
-    // GLuint modelMatrixUniformLocation = basicSpriteShaderProgram.getUniformLocation("modelMatrix");
-    // glBindVertexArray(0);
-    //end setup for testing sprite drawing
-
     //Event loop
     SDL_Event e;
     bool userRequestedExit = false;
@@ -112,11 +58,9 @@ int main()
                 userRequestedExit = true;
             }
         }
-        // glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(demoSprite.getModelMatrix()));
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        // glDrawArrays(GL_TRIANGLES, 0, 6);
-        renderer.render(spriteModelMatrices);
+        // renderer.render(spriteModelMatrices);
         SDL_GL_SwapWindow(window.getWindow());
     }
 
