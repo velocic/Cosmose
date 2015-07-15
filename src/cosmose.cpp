@@ -68,6 +68,9 @@ int main()
     std::cout << glm::to_string(testSprite.getInstanceData().colorModifier) << std::endl;
     instanceData.colorModifier.b = 0.44;
     std::cout << glm::to_string(testSprite.getInstanceData().colorModifier) << std::endl;
+    std::cout << glm::to_string(testSprite.getInstanceData().MVPMatrix) << std::endl;
+    testSprite.scale(glm::vec3(.5, .75, .9895));
+    std::cout << glm::to_string(instanceData.MVPMatrix) << std::endl;
     //END DEBUG
 
     //Event loop
