@@ -5,6 +5,11 @@ const Framework::Sprite::SpriteInstanceData &Framework::Sprite::BasicSprite::get
     return instanceData;
 }
 
+Framework::Sprite::BasicSprite::~BasicSprite()
+{
+    instanceData.isActive = false;
+}
+
 unsigned int Framework::Sprite::BasicSprite::getInstanceID() const
 {
     return instanceID;

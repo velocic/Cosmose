@@ -3,6 +3,7 @@
 
 #include <framework/sprite/spriteinstancedata.h>
 #include <opengl/texturecache.h>
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <vector>
