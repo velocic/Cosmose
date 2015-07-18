@@ -13,6 +13,7 @@ namespace Framework
             glm::mat4 MVPMatrix;
             SpriteTextureCoordinates textureCoordinates;
             glm::vec4 colorModifier;
+            bool isActive = true;
         };
     }
 }

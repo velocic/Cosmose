@@ -15,17 +15,15 @@ namespace Framework
             private:
                 std::shared_ptr<OpenGL::Texture> spriteTexture;
                 SpriteInstanceData &instanceData;
-                unsigned int instanceID;
             public:
                 BasicSprite(
                     std::shared_ptr<OpenGL::Texture> spriteTexture,
-                    SpriteInstanceData &instanceData,
-                    unsigned int instanceID
+                    SpriteInstanceData &instanceData
                 ) :
                     spriteTexture(spriteTexture),
-                    instanceData(instanceData),
-                    instanceID(instanceID)
+                    instanceData(instanceData)
                 {}
+                ~BasicSprite();
                 const SpriteInstanceData &getInstanceData() const;
                 unsigned int getInstanceID() const;
                 std::shared_ptr<OpenGL::Texture> getTexture() const;
