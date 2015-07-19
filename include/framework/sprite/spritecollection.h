@@ -22,7 +22,8 @@ namespace Framework
                 unsigned int frameCount = 0;
                 void deleteInactiveSprites();
             public:
-                //Need to load texture with textureArgs on construction
+                //Note: texture at texturePath needs to be loaded from textureCache
+                //before we can use it here. That way of working should be redesigned.
                 SpriteCollection(
                     OpenGL::TextureCache &textureCache,
                     std::string texturePath
@@ -44,7 +45,7 @@ namespace Framework
                 {
                     InstanceData instanceData;
                     instanceDataCollection.push_back(instanceData);
-                    std::unique_ptr<SpriteType> spritePointer(
+                    return std::unique_ptr<SpriteType> spritePointer(
                         new SpriteType(
                             textureCache.get(texturePath),
                             instanceDataCollection.back()
@@ -55,7 +56,7 @@ namespace Framework
                 {
                     InstanceData instanceData = sourceSprite.getInstanceData();
                     instanceDataCollection.push_back(instanceData);
-                    std::unique_ptr<SpriteType> spritePointer(
+                    return std::unique_ptr<SpriteType> spritePointer(
                         new SpriteType(
                             textureCache.get(texturePath),
                             instanceDataCollection.back()
