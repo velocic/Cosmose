@@ -7,7 +7,7 @@ const Framework::Sprite::SpriteInstanceData &Framework::Sprite::BasicSprite::get
 
 Framework::Sprite::BasicSprite::~BasicSprite()
 {
-    instanceData.isActive = false;
+    instanceData.isFlaggedForDeletion = true;
 }
 
 std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() const

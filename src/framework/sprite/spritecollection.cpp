@@ -7,10 +7,7 @@ void Framework::Sprite::SpriteCollection::deleteInactiveSprites()
             instanceDataCollection.begin(),
             instanceDataCollection.end(),
             [](SpriteInstanceData &currentInstanceData) -> bool {
-                if (currentInstanceData.isActive == false) {
-                    return true;
-                }
-                return false;
+                return currentInstanceData.isFlaggedForDeletion;
             }
         ),
         instanceDataCollection.end()

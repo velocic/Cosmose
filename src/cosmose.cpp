@@ -69,10 +69,15 @@ int main()
     sprites[0]->translate(glm::vec3(.5,.985,3.45));
     sprites[0]->scale(glm::vec3(.5, .25, .125));
     std::cout << glm::to_string(sprites[0]->getInstanceData().MVPMatrix) << std::endl;
-    std::cout << sprites[0]->getInstanceData().isActive << std::endl;
+    std::cout << sprites[0]->getInstanceData().isFlaggedForDeletion << std::endl;
     sprites[0] = nullptr;
-    std::cout << spriteCollection.getInstanceData()[0].isActive << std::endl;
+    std::cout << spriteCollection.getInstanceData()[0].isFlaggedForDeletion << std::endl;
     std::cout << glm::to_string(spriteCollection.getInstanceData()[0].MVPMatrix) << std::endl;
+    std::cout << spriteCollection.getInstanceData().size() << std::endl;
+    for (int i = 0; i < 300; ++i) {
+        spriteCollection.getInstanceData();
+    }
+    std::cout << spriteCollection.getInstanceData().size() << std::endl;
     //END DEBUG
 
     //Event loop
