@@ -40,30 +40,32 @@ namespace Framework
                     texturePath(texturePath),
                     framesBetweenSpriteDeletion(framesBetweenSpriteDeletion)
                 {}
-                const std::vector<SpriteInstanceData> &getInstanceData() const;
+                const std::vector<SpriteInstanceData> &getInstanceData();
                 template<typename SpriteType> std::unique_ptr<SpriteType> getSprite()
                 {
-                    InstanceData instanceData;
+                    SpriteInstanceData instanceData;
                     instanceDataCollection.push_back(instanceData);
-                    return std::unique_ptr<SpriteType> spritePointer(
+                    std::unique_ptr<SpriteType> spritePointer(
                         new SpriteType(
-                            textureCache.get(texturePath),
+                            textureCache.getTexture(texturePath),
                             instanceDataCollection.back()
                         )
                     );
+                    return spritePointer;
                 }
                 template<typename SpriteType> std::unique_ptr<SpriteType> getSprite(SpriteType sourceSprite)
                 {
-                    InstanceData instanceData = sourceSprite.getInstanceData();
+                    SpriteInstanceData instanceData = sourceSprite.getInstanceData();
                     instanceDataCollection.push_back(instanceData);
-                    return std::unique_ptr<SpriteType> spritePointer(
+                    std::unique_ptr<SpriteType> spritePointer(
                         new SpriteType(
-                            textureCache.get(texturePath),
+                            textureCache.getTexture(texturePath),
                             instanceDataCollection.back()
                         )
                     );
+                    return spritePointer;
                 }
-        }
+        };
     }
 }
 

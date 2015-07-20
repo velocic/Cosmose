@@ -5,8 +5,8 @@ void Framework::Sprite::SpriteCollection::deleteInactiveSprites()
     instanceDataCollection.erase(
         std::remove_if(
             instanceDataCollection.begin(),
-            instanceDataColelction.end(),
-            [](InstanceData &currentInstanceData) -> bool {
+            instanceDataCollection.end(),
+            [](SpriteInstanceData &currentInstanceData) -> bool {
                 if (currentInstanceData.isActive == false) {
                     return true;
                 }
@@ -17,7 +17,7 @@ void Framework::Sprite::SpriteCollection::deleteInactiveSprites()
     );
 }
 
-const std::vector<Framework::Sprite::SpriteInstanceData> &Framework::Sprite::SpriteCollection::getInstanceData() const
+const std::vector<Framework::Sprite::SpriteInstanceData> &Framework::Sprite::SpriteCollection::getInstanceData()
 {
     if (frameCount > framesBetweenSpriteDeletion) {
         deleteInactiveSprites();

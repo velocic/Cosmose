@@ -10,11 +10,6 @@ Framework::Sprite::BasicSprite::~BasicSprite()
     instanceData.isActive = false;
 }
 
-unsigned int Framework::Sprite::BasicSprite::getInstanceID() const
-{
-    return instanceID;
-}
-
 std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() const
 {
     return spriteTexture;

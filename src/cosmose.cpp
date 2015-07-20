@@ -2,17 +2,8 @@
 #include <opengl/context.h>
 #include <SDL2/SDL.h>
 #include <UI/window.h>
-#include <utilities/assetcache.h>
-#include <utilities/ioutils.h>
 #include <iostream>
-#include <string>
-#include <vector>
 
-#include <glm/gtx/string_cast.hpp>
-#include <framework/sprite/basicsprite.h>
-#include <framework/sprite/spriteinstancedata.h>
-#include <opengl/texturecache.h>
-#include <memory>
 int main()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
@@ -50,6 +41,10 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, modelBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    //DEBUG
+    //
+    //END DEBUG
 
     //Event loop
     SDL_Event e;

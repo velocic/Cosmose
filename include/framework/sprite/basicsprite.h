@@ -25,7 +25,6 @@ namespace Framework
                 {}
                 ~BasicSprite();
                 const SpriteInstanceData &getInstanceData() const;
-                unsigned int getInstanceID() const;
                 std::shared_ptr<OpenGL::Texture> getTexture() const;
                 void rotate(float rotationAngle, glm::vec3 rotationAxis);
                 void scale(glm::vec3 scaleVector);
