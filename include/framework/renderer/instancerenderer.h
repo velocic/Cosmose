@@ -1,10 +1,9 @@
 #ifndef INSTANCERENDERER_H
 #define INSTANCERENDERER_H
 
-#include <framework/sprite/basicsprite.h>
+#include <framework/sprite/spriteinstancedata.h>
 #include <glm/glm.hpp>
 #include <opengl/programlinker.h>
-#include <algorithm>
 #include <vector>
 
 namespace Framework
@@ -14,15 +13,22 @@ namespace Framework
         class InstanceRenderer
         {
             private:
-                ProgramLinker shaderProgram;
+                ProgramLinker &shaderProgram;
                 GLuint modelDataBuffer;
                 GLuint instanceDataBuffer;
                 GLuint instanceDataArray;
             public:
-                InstanceRenderer(ProgramLinker shaderProgram, GLuint modelDataBuffer);
+                InstanceRenderer(ProgramLinker &shaderProgram, GLuint modelDataBuffer);
                 ~InstanceRenderer();
-                void render(std::vector<glm::mat4> &spriteModelMatrices);
-                void sortSpriteCollectionByTexture(std::vector<Framework::Sprite::BasicSprite> &spriteCollection);
+                void enableVertexAttribPointer(
+                    GLuint vertexAttributeIndex,
+                    GLint componentSize,
+                    GLenum dataType,
+                    GLboolean isDataNormalized,
+                    GLsizei dataStride,
+                    GLvoid *dataPointer
+                );
+                void render(const std::vector<Framework::Sprite::SpriteInstanceData> &instanceDataCollection);
         };
     }
 }
