@@ -6,6 +6,16 @@ Framework::Renderer::InstanceRenderer::InstanceRenderer(ProgramLinker &shaderPro
     glGenBuffers(1, &instanceDataBuffer);
     glGenVertexArrays(1, &instanceDataArray);
 
+    //Set up VAO for the hard-coded model vertices
+    glBindBuffer(GL_ARRAY_BUFFER, modelDataBuffer);
+    glBindVertexArray(instanceDataArray);
+    //consider searching for a glsl attribute here, rather than
+    //using index 0 by default
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
 }
 
 Framework::Renderer::InstanceRenderer::~InstanceRenderer()
@@ -23,9 +33,7 @@ void Framework::Renderer::InstanceRenderer::enableVertexAttribPointer(
     GLvoid *dataPointer
 )
 {
-    //Note: this needs to be fixed. Only binds to model buffer, but we also need to bind instanceDataArray
-    //to data in the instanceDataBuffer
-    glBindBuffer(GL_ARRAY_BUFFER, modelDataBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, instanceDataBuffer);
     glBindVertexArray(instanceDataArray);
     glEnableVertexAttribArray(vertexAttributeIndex);
     glVertexAttribPointer(
@@ -51,7 +59,7 @@ void Framework::Renderer::InstanceRenderer::render(const std::vector<Framework::
         instanceDataCollection.data(),
         GL_DYNAMIC_DRAW
     );
-    // glDrawArraysInstanced(GL_TRIANGLES, 0, 6, spriteModelMatrices.size());
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 6, instanceDataCollection.size());
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     // shaderProgram.unuse(); <-- need to fix, currently unuse frees the sprite from GPU. should remove that behavior
