@@ -4,6 +4,14 @@
 #include <UI/window.h>
 #include <iostream>
 
+#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <opengl/texturecache.h>
+#include <opengl/texture.h>
+#include <framework/sprite/spritecollection.h>
+#include <framework/sprite/basicsprite.h>
+#include <memory>
+
 int main()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
@@ -43,7 +51,28 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     //DEBUG
-    //
+    OpenGL::TextureCache textureCache;
+    std::shared_ptr<OpenGL::Texture> debugTexture = textureCache.loadTexture(
+        "demotexture.png",
+        GL_REPEAT,
+        GL_REPEAT,
+        GL_LINEAR,
+        GL_LINEAR,
+        false
+    );
+    Framework::Sprite::SpriteCollection spriteCollection(
+        textureCache,
+        "demotexture.png"
+    );
+    std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
+    sprites.push_back(spriteCollection.getSprite<Framework::Sprite::BasicSprite>());
+    sprites[0]->translate(glm::vec3(.5,.985,3.45));
+    sprites[0]->scale(glm::vec3(.5, .25, .125));
+    std::cout << glm::to_string(sprites[0]->getInstanceData().MVPMatrix) << std::endl;
+    std::cout << sprites[0]->getInstanceData().isActive << std::endl;
+    sprites[0] = nullptr;
+    std::cout << spriteCollection.getInstanceData()[0].isActive << std::endl;
+    std::cout << glm::to_string(spriteCollection.getInstanceData()[0].MVPMatrix) << std::endl;
     //END DEBUG
 
     //Event loop
