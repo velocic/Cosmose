@@ -23,6 +23,8 @@ void Framework::Renderer::InstanceRenderer::enableVertexAttribPointer(
     GLvoid *dataPointer
 )
 {
+    //Note: this needs to be fixed. Only binds to model buffer, but we also need to bind instanceDataArray
+    //to data in the instanceDataBuffer
     glBindBuffer(GL_ARRAY_BUFFER, modelDataBuffer);
     glBindVertexArray(instanceDataArray);
     glEnableVertexAttribArray(vertexAttributeIndex);
@@ -49,8 +51,6 @@ void Framework::Renderer::InstanceRenderer::render(const std::vector<Framework::
         instanceDataCollection.data(),
         GL_DYNAMIC_DRAW
     );
-    //glDrawElements call here to use only 4 vertices, instead of 6 per quad
-    // glBufferData(GL_ARRAY_BUFFER, spriteModelMatrices.size() * sizeof(glm::mat4), spriteModelMatrices.data(), GL_DYNAMIC_DRAW);
     // glDrawArraysInstanced(GL_TRIANGLES, 0, 6, spriteModelMatrices.size());
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
