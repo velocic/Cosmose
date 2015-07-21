@@ -10,6 +10,8 @@
 #include <opengl/texture.h>
 #include <framework/sprite/spritecollection.h>
 #include <framework/sprite/basicsprite.h>
+#include <framework/sprite/spriteinstancedata.h>
+#include <framework/sprite/spritetexturecoordinates.h>
 #include <framework/renderer/instancerenderer.h>
 #include <opengl/programlinker.h>
 #include <opengl/shader.h>
@@ -55,8 +57,8 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     //DEBUG
-    Shader basicVertexShader(GL_VERTEX_SHADER, "shaders/instancedsprite.vert");
-    Shader basicFragmentShader(GL_FRAGMENT_SHADER, "shaders/instancedsprite.frag");
+    Shader basicVertexShader(GL_VERTEX_SHADER, "src/shaders/instancedsprite.vert");
+    Shader basicFragmentShader(GL_FRAGMENT_SHADER, "src/shaders/instancedsprite.frag");
     std::vector<Shader> shaders = {basicVertexShader, basicFragmentShader};
     ProgramLinker shaderProgram(shaders);
     shaderProgram.link();
@@ -74,13 +76,15 @@ int main()
         textureCache,
         "demotexture.png"
     );
-    std::vector<Framework::Sprite::BasicSprite> sprites;
+    std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
     sprites.push_back(spriteCollection.getSprite<Framework::Sprite::BasicSprite>());
     Framework::Renderer::InstanceRenderer renderer(
         shaderProgram,
         modelBuffer
     );
-    //enableVertexAttribPointers here
+    //Setup vertex attrib pointer for sprite MVP matrix (must be done 1 row at a time)
+    //Setup vertex attrib pointer for UV coordinates (non-instanced)
+    //Setup vertex attrib pointer for colorModifier vec4 (instanced)
     //END DEBUG
 
     //Event loop
