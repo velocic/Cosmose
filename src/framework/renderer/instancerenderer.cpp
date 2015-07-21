@@ -30,7 +30,8 @@ void Framework::Renderer::InstanceRenderer::enableVertexAttribPointer(
     GLenum dataType,
     GLboolean isDataNormalized,
     GLsizei dataStride,
-    GLvoid *dataPointer
+    GLvoid *dataPointer,
+    GLuint vertexAttributeDivisor
 )
 {
     glBindBuffer(GL_ARRAY_BUFFER, instanceDataBuffer);
@@ -44,6 +45,7 @@ void Framework::Renderer::InstanceRenderer::enableVertexAttribPointer(
         dataStride,
         dataPointer
     );
+    glVertexAttribDivisor(vertexAttributeIndex, vertexAttributeDivisor);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }

@@ -26,7 +26,8 @@ namespace Framework
                     GLenum dataType,
                     GLboolean isDataNormalized,
                     GLsizei dataStride,
-                    GLvoid *dataPointer
+                    GLvoid *dataPointer,
+                    GLuint vertexAttributeDivisor
                 );
                 void render(const std::vector<Framework::Sprite::SpriteInstanceData> &instanceDataCollection);
         };
