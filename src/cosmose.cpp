@@ -10,6 +10,10 @@
 #include <opengl/texture.h>
 #include <framework/sprite/spritecollection.h>
 #include <framework/sprite/basicsprite.h>
+#include <framework/renderer/instancerenderer.h>
+#include <opengl/programlinker.h>
+#include <opengl/shader.h>
+#include <vector>
 #include <memory>
 
 int main()
@@ -51,6 +55,12 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     //DEBUG
+    Shader basicVertexShader(GL_VERTEX_SHADER, "shaders/instancedsprite.vert");
+    Shader basicFragmentShader(GL_FRAGMENT_SHADER, "shaders/instancedsprite.frag");
+    std::vector<Shader> shaders = {basicVertexShader, basicFragmentShader};
+    ProgramLinker shaderProgram(shaders);
+    shaderProgram.link();
+
     OpenGL::TextureCache textureCache;
     std::shared_ptr<OpenGL::Texture> debugTexture = textureCache.loadTexture(
         "demotexture.png",
@@ -64,20 +74,13 @@ int main()
         textureCache,
         "demotexture.png"
     );
-    std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
+    std::vector<Framework::Sprite::BasicSprite> sprites;
     sprites.push_back(spriteCollection.getSprite<Framework::Sprite::BasicSprite>());
-    sprites[0]->translate(glm::vec3(.5,.985,3.45));
-    sprites[0]->scale(glm::vec3(.5, .25, .125));
-    std::cout << glm::to_string(sprites[0]->getInstanceData().MVPMatrix) << std::endl;
-    std::cout << sprites[0]->getInstanceData().isFlaggedForDeletion << std::endl;
-    sprites[0] = nullptr;
-    std::cout << spriteCollection.getInstanceData()[0].isFlaggedForDeletion << std::endl;
-    std::cout << glm::to_string(spriteCollection.getInstanceData()[0].MVPMatrix) << std::endl;
-    std::cout << spriteCollection.getInstanceData().size() << std::endl;
-    for (int i = 0; i < 300; ++i) {
-        spriteCollection.getInstanceData();
-    }
-    std::cout << spriteCollection.getInstanceData().size() << std::endl;
+    Framework::Renderer::InstanceRenderer renderer(
+        shaderProgram,
+        modelBuffer
+    );
+    //enableVertexAttribPointers here
     //END DEBUG
 
     //Event loop
