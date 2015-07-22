@@ -1,8 +1,30 @@
 #include <framework/sprite/basicsprite.h>
 
-glm::mat4 Framework::Sprite::BasicSprite::getModelMatrix()
+Framework::Sprite::BasicSprite::BasicSprite(
+    std::shared_ptr<OpenGL::Texture> spriteTexture,
+    SpriteInstanceData &instanceData
+) :
+    spriteTexture(spriteTexture),
+    instanceData(instanceData)
 {
-    return modelMatrix;
+    //hard-code BasicSprite's texture coordinates to
+    //just use the full texture size
+    instanceData.textureCoordinates.textureCoordinate1 = glm::vec2(0.0f, 0.0f);
+    instanceData.textureCoordinates.textureCoordinate2 = glm::vec2(1.0f, 0.0f);
+    instanceData.textureCoordinates.textureCoordinate3 = glm::vec2(1.0f, 1.0f);
+    instanceData.textureCoordinates.textureCoordinate4 = glm::vec2(0.0f, 0.0f);
+    instanceData.textureCoordinates.textureCoordinate5 = glm::vec2(0.0f, 1.0f);
+    instanceData.textureCoordinates.textureCoordinate6 = glm::vec2(1.0f, 1.0f);
+}
+
+Framework::Sprite::BasicSprite::~BasicSprite()
+{
+    instanceData.isFlaggedForDeletion = true;
+}
+
+const Framework::Sprite::SpriteInstanceData &Framework::Sprite::BasicSprite::getInstanceData() const
+{
+    return instanceData;
 }
 
 std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() const
@@ -12,15 +34,15 @@ std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() co
 
 void Framework::Sprite::BasicSprite::rotate(float rotationAngle, glm::vec3 rotationAxis)
 {
-    modelMatrix = glm::rotate(modelMatrix, rotationAngle, rotationAxis);
+    instanceData.MVPMatrix = glm::rotate(instanceData.MVPMatrix, rotationAngle, rotationAxis);
 }
 
 void Framework::Sprite::BasicSprite::scale(glm::vec3 scaleVector)
 {
-    modelMatrix = glm::scale(modelMatrix, scaleVector);
+    instanceData.MVPMatrix = glm::scale(instanceData.MVPMatrix, scaleVector);
 }
 
 void Framework::Sprite::BasicSprite::translate(glm::vec3 translationVector)
 {
-    modelMatrix = glm::translate(modelMatrix, translationVector);
+    instanceData.MVPMatrix = glm::translate(instanceData.MVPMatrix, translationVector);
 }

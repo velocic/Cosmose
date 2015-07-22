@@ -1,20 +1,22 @@
 #include <GL/gl3w.h>
-#include <framework/renderer/instancerenderer.h>
-#include <framework/sprite/basicsprite.h>
-#include <glm/gtc/type_ptr.hpp>
 #include <opengl/context.h>
-#include <opengl/programlinker.h>
-#include <opengl/shader.h>
-#include <opengl/texturecache.h>
-#include <opengl/texture.h>
 #include <SDL2/SDL.h>
 #include <UI/window.h>
-#include <utilities/assetcache.h>
-#include <utilities/ioutils.h>
 #include <iostream>
-#include <memory>
-#include <string>
+
+#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <opengl/texturecache.h>
+#include <opengl/texture.h>
+#include <framework/sprite/spritecollection.h>
+#include <framework/sprite/basicsprite.h>
+#include <framework/sprite/spriteinstancedata.h>
+#include <framework/sprite/spritetexturecoordinates.h>
+#include <framework/renderer/instancerenderer.h>
+#include <opengl/programlinker.h>
+#include <opengl/shader.h>
 #include <vector>
+#include <memory>
 
 int main()
 {
@@ -37,32 +39,10 @@ int main()
         std::cout << "gl3w failed to initialize OpenGL" << std::endl;
         return EXIT_FAILURE;
     }
-    
-    //testing sprite drawing
-    Shader basicSpriteVertexShader(GL_VERTEX_SHADER, "src/shaders/basicsprite.vert");
-    Shader basicSpriteFragmentShader(GL_FRAGMENT_SHADER, "src/shaders/basicsprite.frag");
-    std::vector<Shader> shaders = {basicSpriteVertexShader, basicSpriteFragmentShader};
-    ProgramLinker basicSpriteShaderProgram(shaders);
-    basicSpriteShaderProgram.link();
-    basicSpriteShaderProgram.use();
-
-    //load a texture
-    OpenGL::TextureCache textureCache;
-
-    Framework::Sprite::BasicSprite demoSprite(
-        textureCache.loadTexture(
-            "./demotexture.png",
-            GL_REPEAT,
-            GL_REPEAT,
-            GL_NEAREST,
-            GL_NEAREST,
-            false
-        )
-    );
-    demoSprite.getTexture()->bind();
-
-    float modelCoordinatesAndUVData[] = {
-        //x,y,u,v
+    //Buffer a quad that will be used for ALL sprites (scaled, rotated, and transformed as needed)
+    //Note: needs to be modified to only use 4 points to work properly with SpriteTextureData struct
+    float quadVertices[] = {
+        //x,y
         0.0f, 0.0f,
         1.0f, 0.0f,
         1.0f, 1.0f,
@@ -70,19 +50,99 @@ int main()
         0.0f, 1.0f,
         1.0f, 1.0f,
     };
-    //VBO, VAO, Vertex Coordinates, UV Coordinates, Texture, Uniform matrix, shader program
     GLuint modelBuffer;
     glGenBuffers(1, &modelBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, modelBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(modelCoordinatesAndUVData), modelCoordinatesAndUVData, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    GLuint basicShaderVertexArray;
-    glGenVertexArrays(1, &basicShaderVertexArray);
-    glBindVertexArray(basicShaderVertexArray);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid *)0);
-    GLuint modelMatrixUniformLocation = basicSpriteShaderProgram.getUniformLocation("modelMatrix");
-    //end setup for testing sprite drawing
+    //DEBUG
+    Shader basicVertexShader(GL_VERTEX_SHADER, "src/shaders/instancedsprite.vert");
+    Shader basicFragmentShader(GL_FRAGMENT_SHADER, "src/shaders/instancedsprite.frag");
+    std::vector<Shader> shaders = {basicVertexShader, basicFragmentShader};
+    ProgramLinker shaderProgram(shaders);
+    shaderProgram.link();
+
+    OpenGL::TextureCache textureCache;
+    std::shared_ptr<OpenGL::Texture> debugTexture = textureCache.loadTexture(
+        "demotexture.png",
+        GL_REPEAT,
+        GL_REPEAT,
+        GL_LINEAR,
+        GL_LINEAR,
+        false
+    );
+    debugTexture->bind();
+
+    Framework::Sprite::SpriteCollection spriteCollection(
+        textureCache,
+        "demotexture.png"
+    );
+    std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
+    sprites.push_back(spriteCollection.getSprite<Framework::Sprite::BasicSprite>());
+    Framework::Renderer::InstanceRenderer renderer(
+        shaderProgram,
+        modelBuffer
+    );
+    //Setup vertex attrib pointer for sprite MVP matrix (must be done 1 row at a time)
+    renderer.enableVertexAttribPointer(
+        1,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)0,
+        1
+    );
+    renderer.enableVertexAttribPointer(
+        2,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)(sizeof(glm::vec4)),
+        1
+    );
+    renderer.enableVertexAttribPointer(
+        3,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)(2 * sizeof(glm::vec4)),
+        1
+    );
+    renderer.enableVertexAttribPointer(
+        4,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)(3 * sizeof(glm::vec4)),
+        1
+    );
+    //Setup vertex attrib pointer for UV coordinates (non-instanced)
+    renderer.enableVertexAttribPointer(
+        5,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(glm::vec2),
+        (GLvoid *)(sizeof(Framework::Sprite::SpriteInstanceData::MVPMatrix)),
+        0
+    );
+    //Setup vertex attrib pointer for colorModifier vec4 (instanced)
+    renderer.enableVertexAttribPointer(
+        6,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)(sizeof(Framework::Sprite::SpriteInstanceData::MVPMatrix) + sizeof(Framework::Sprite::SpriteTextureCoordinates)),
+        1
+    );
+    sprites[0]->translate(glm::vec3(-1, -1, 0));
+    //END DEBUG
 
     //Event loop
     SDL_Event e;
@@ -94,10 +154,9 @@ int main()
                 userRequestedExit = true;
             }
         }
-        glUniformMatrix4fv(modelMatrixUniformLocation, 1, GL_FALSE, glm::value_ptr(demoSprite.getModelMatrix()));
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        renderer.render(spriteCollection.getInstanceData());
         SDL_GL_SwapWindow(window.getWindow());
     }
 
