@@ -19,10 +19,7 @@ namespace Framework
                 BasicSprite(
                     std::shared_ptr<OpenGL::Texture> spriteTexture,
                     SpriteInstanceData &instanceData
-                ) :
-                    spriteTexture(spriteTexture),
-                    instanceData(instanceData)
-                {}
+                );
                 ~BasicSprite();
                 const SpriteInstanceData &getInstanceData() const;
                 std::shared_ptr<OpenGL::Texture> getTexture() const;

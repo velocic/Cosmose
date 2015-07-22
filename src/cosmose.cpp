@@ -72,6 +72,8 @@ int main()
         GL_LINEAR,
         false
     );
+    debugTexture->bind();
+
     Framework::Sprite::SpriteCollection spriteCollection(
         textureCache,
         "demotexture.png"
@@ -83,8 +85,63 @@ int main()
         modelBuffer
     );
     //Setup vertex attrib pointer for sprite MVP matrix (must be done 1 row at a time)
+    renderer.enableVertexAttribPointer(
+        1,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)0,
+        1
+    );
+    renderer.enableVertexAttribPointer(
+        2,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)(sizeof(glm::vec4)),
+        1
+    );
+    renderer.enableVertexAttribPointer(
+        3,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)(2 * sizeof(glm::vec4)),
+        1
+    );
+    renderer.enableVertexAttribPointer(
+        4,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)(3 * sizeof(glm::vec4)),
+        1
+    );
     //Setup vertex attrib pointer for UV coordinates (non-instanced)
+    renderer.enableVertexAttribPointer(
+        5,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(glm::vec2),
+        (GLvoid *)(sizeof(Framework::Sprite::SpriteInstanceData::MVPMatrix)),
+        0
+    );
     //Setup vertex attrib pointer for colorModifier vec4 (instanced)
+    renderer.enableVertexAttribPointer(
+        6,
+        4,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(Framework::Sprite::SpriteInstanceData),
+        (GLvoid *)(sizeof(Framework::Sprite::SpriteInstanceData::MVPMatrix) + sizeof(Framework::Sprite::SpriteTextureCoordinates)),
+        1
+    );
+    sprites[0]->translate(glm::vec3(-1, -1, 0));
     //END DEBUG
 
     //Event loop
@@ -99,6 +156,7 @@ int main()
         }
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        renderer.render(spriteCollection.getInstanceData());
         SDL_GL_SwapWindow(window.getWindow());
     }
 

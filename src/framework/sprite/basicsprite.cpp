@@ -1,13 +1,30 @@
 #include <framework/sprite/basicsprite.h>
 
-const Framework::Sprite::SpriteInstanceData &Framework::Sprite::BasicSprite::getInstanceData() const
+Framework::Sprite::BasicSprite::BasicSprite(
+    std::shared_ptr<OpenGL::Texture> spriteTexture,
+    SpriteInstanceData &instanceData
+) :
+    spriteTexture(spriteTexture),
+    instanceData(instanceData)
 {
-    return instanceData;
+    //hard-code BasicSprite's texture coordinates to
+    //just use the full texture size
+    instanceData.textureCoordinates.textureCoordinate1 = glm::vec2(0.0f, 0.0f);
+    instanceData.textureCoordinates.textureCoordinate2 = glm::vec2(1.0f, 0.0f);
+    instanceData.textureCoordinates.textureCoordinate3 = glm::vec2(1.0f, 1.0f);
+    instanceData.textureCoordinates.textureCoordinate4 = glm::vec2(0.0f, 0.0f);
+    instanceData.textureCoordinates.textureCoordinate5 = glm::vec2(0.0f, 1.0f);
+    instanceData.textureCoordinates.textureCoordinate6 = glm::vec2(1.0f, 1.0f);
 }
 
 Framework::Sprite::BasicSprite::~BasicSprite()
 {
     instanceData.isFlaggedForDeletion = true;
+}
+
+const Framework::Sprite::SpriteInstanceData &Framework::Sprite::BasicSprite::getInstanceData() const
+{
+    return instanceData;
 }
 
 std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() const
