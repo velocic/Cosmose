@@ -79,7 +79,9 @@ int main()
         "demotexture.png"
     );
     std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
-    sprites.push_back(spriteCollection.getSprite<Framework::Sprite::BasicSprite>());
+    for (int i = 0; i < 500; ++i) {
+        sprites.push_back(spriteCollection.getSprite<Framework::Sprite::BasicSprite>());
+    }
     Framework::Renderer::InstanceRenderer renderer(
         shaderProgram,
         modelBuffer
