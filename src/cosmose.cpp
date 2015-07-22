@@ -68,8 +68,8 @@ int main()
         "demotexture.png",
         GL_REPEAT,
         GL_REPEAT,
-        GL_LINEAR,
-        GL_LINEAR,
+        GL_NEAREST,
+        GL_NEAREST,
         false
     );
     debugTexture->bind();
@@ -79,8 +79,9 @@ int main()
         "demotexture.png"
     );
     std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
-    for (int i = 0; i < 500; ++i) {
+    for (int i = 0; i < 100000; ++i) {
         sprites.push_back(spriteCollection.getSprite<Framework::Sprite::BasicSprite>());
+        sprites.back()->scale(glm::vec3(.05,.05,0));
     }
     Framework::Renderer::InstanceRenderer renderer(
         shaderProgram,
