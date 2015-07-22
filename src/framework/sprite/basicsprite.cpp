@@ -20,6 +20,7 @@ Framework::Sprite::BasicSprite::BasicSprite(
 Framework::Sprite::BasicSprite::~BasicSprite()
 {
     instanceData.isFlaggedForDeletion = true;
+    scale(glm::vec3(0, 0, 0));
 }
 
 const Framework::Sprite::SpriteInstanceData &Framework::Sprite::BasicSprite::getInstanceData() const
