@@ -9,7 +9,7 @@
 
 namespace Utility
 {
-    template<typename CacheItem>
+    template <typename CacheItem>
     class AssetCache
     {
         private:
