@@ -8,12 +8,6 @@ namespace Utility
 {
     class ManagedArray
     {
-        /*
-         * A customzied generic collection object meant for efficient deletion,
-         * and to allow objects to hold non-invalidating references to its'
-         * contained elements while this object is live. This collection assumes
-         * that its Elements 
-         */
         private:
             std::unique_ptr<Element[]> collection;
             unsigned int currentSize;
