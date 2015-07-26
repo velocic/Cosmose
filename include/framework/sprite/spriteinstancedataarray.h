@@ -18,7 +18,7 @@ namespace Framework
             public:
                 SpriteInstanceDataArray(unsigned int maxSize);
                 ~SpriteInstanceDataArray();
-                const std::unique_ptr<SpriteInstanceData[]> getCollection() const;
+                const SpriteInstanceData *getCollection() const;
                 unsigned int getSize();
                 unsigned int getSizeInBytes();
                 SpriteInstanceData &insert(SpriteInstanceData element);

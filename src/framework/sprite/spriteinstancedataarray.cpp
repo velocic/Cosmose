@@ -3,7 +3,7 @@
 Framework::Sprite::SpriteInstanceDataArray::SpriteInstanceDataArray(unsigned int maxSize)
     : maxSize(maxSize)
 {
-    collection = std::unique_ptr<SpriteInstanceData[]>(new SpriteInstanceData[maxSize]);
+    collection = std::unique_ptr<Framework::Sprite::SpriteInstanceData[]>(new Framework::Sprite::SpriteInstanceData[maxSize]);
     currentSize = 0;
 }
 
@@ -12,9 +12,9 @@ Framework::Sprite::SpriteInstanceDataArray::~SpriteInstanceDataArray()
     collection = nullptr;
 }
 
-const std::unique_ptr<SpriteInstanceData[]> Framework::Sprite::SpriteInstanceDataArray::getCollection() const
+const Framework::Sprite::SpriteInstanceData *Framework::Sprite::SpriteInstanceDataArray::getCollection() const
 {
-    return collection;
+    return collection.get();
 }
 
 unsigned int Framework::Sprite::SpriteInstanceDataArray::getSize()
@@ -24,23 +24,23 @@ unsigned int Framework::Sprite::SpriteInstanceDataArray::getSize()
 
 unsigned int Framework::Sprite::SpriteInstanceDataArray::getSizeInBytes()
 {
-    return (sizeof(SpriteInstanceData) * currentSize);
+    return (sizeof(Framework::Sprite::SpriteInstanceData) * currentSize);
 }
 
-SpriteInstanceData &Framework::Sprite::SpriteInstanceDataArray::insert(SpriteInstanceData element)
+Framework::Sprite::SpriteInstanceData &Framework::Sprite::SpriteInstanceDataArray::insert(Framework::Sprite::SpriteInstanceData element)
 {
     if (currentSize >= maxSize) {
         throw std::logic_error("Error: Tried to insert an element into a full Framework::Sprite::SpriteInstanceDataArray.");
     }
 
-    collection[currentSize] = element;
-    collection[currentSize].parentArrayIndex = currentSize;
+    collection.get()[currentSize] = element;
+    collection.get()[currentSize].parentArrayIndex = currentSize;
     ++currentSize;
-    return &collection[currentSize-1];
+    return collection.get()[currentSize-1];
 }
 
 void Framework::Sprite::SpriteInstanceDataArray::remove(unsigned int indexToRemove)
 {
-    collection[indexToRemove] = collection[currentSize-1];
+    collection.get()[indexToRemove] = collection.get()[currentSize-1];
     --currentSize;
 }
