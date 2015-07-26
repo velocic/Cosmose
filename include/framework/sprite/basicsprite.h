@@ -3,6 +3,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <framework/sprite/spriteinstancedata.h>
+#include <framework/sprite/spriteinstancedataarray.h>
 #include <opengl/texture.h>
 #include <memory>
 
@@ -15,10 +16,12 @@ namespace Framework
             private:
                 std::shared_ptr<OpenGL::Texture> spriteTexture;
                 SpriteInstanceData &instanceData;
+                SpriteInstanceDataArray &parentInstanceCollection;
             public:
                 BasicSprite(
                     std::shared_ptr<OpenGL::Texture> spriteTexture,
-                    SpriteInstanceData &instanceData
+                    SpriteInstanceData &instanceData,
+                    SpriteInstanceDataArray &parentInstanceCollection
                 );
                 ~BasicSprite();
                 const SpriteInstanceData &getInstanceData() const;

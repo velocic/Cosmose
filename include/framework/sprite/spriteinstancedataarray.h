@@ -12,9 +12,9 @@ namespace Framework
         class SpriteInstanceDataArray
         {
             private:
+                const unsigned int maxSize;
                 std::unique_ptr<SpriteInstanceData[]> collection;
                 unsigned int currentSize;
-                const unsigned int maxSize;
             public:
                 SpriteInstanceDataArray(unsigned int maxSize);
                 ~SpriteInstanceDataArray();

@@ -1,11 +1,12 @@
 #include <framework/sprite/spriteinstancedataarray.h>
 
-Framework::Sprite::SpriteInstanceDataArray::SpriteInstanceDataArray(unsigned int maxSize)
-    : maxSize(maxSize)
-{
-    collection = std::unique_ptr<Framework::Sprite::SpriteInstanceData[]>(new Framework::Sprite::SpriteInstanceData[maxSize]);
-    currentSize = 0;
-}
+Framework::Sprite::SpriteInstanceDataArray::SpriteInstanceDataArray(
+    unsigned int maxSize
+) :
+    maxSize(maxSize),
+    collection(new Framework::Sprite::SpriteInstanceData[maxSize]),
+    currentSize(0)
+{}
 
 Framework::Sprite::SpriteInstanceDataArray::~SpriteInstanceDataArray()
 {
