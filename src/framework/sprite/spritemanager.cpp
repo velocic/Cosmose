@@ -14,3 +14,13 @@ const Framework::Sprite::SpriteInstanceData *Framework::Sprite::SpriteManager::g
 {
     return instanceDataCollection.getCollection();
 }
+
+unsigned int Framework::Sprite::SpriteManager::getInstanceDataCollectionSize() const
+{
+    return instanceDataCollection.getSize();
+}
+
+unsigned int Framework::Sprite::SpriteManager::getInstanceDataCollectionSizeInBytes() const
+{
+    return instanceDataCollection.getSizeInBytes();
+}

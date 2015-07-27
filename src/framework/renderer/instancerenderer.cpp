@@ -50,18 +50,22 @@ void Framework::Renderer::InstanceRenderer::enableVertexAttribPointer(
     glBindVertexArray(0);
 }
 
-void Framework::Renderer::InstanceRenderer::render(const std::vector<Framework::Sprite::SpriteInstanceData> &instanceDataCollection)
+void Framework::Renderer::InstanceRenderer::render(
+    const Framework::Sprite::SpriteInstanceData *instanceDataCollection,
+    unsigned int instanceDataCollectionSize,
+    unsigned int instanceDataCollectionSizeInBytes
+)
 {
     shaderProgram.use();
     glBindVertexArray(instanceDataArray);
     glBindBuffer(GL_ARRAY_BUFFER, instanceDataBuffer);
     glBufferData(
         GL_ARRAY_BUFFER,
-        instanceDataCollection.size() * sizeof(Framework::Sprite::SpriteInstanceData),
-        instanceDataCollection.data(),
+        instanceDataCollectionSizeInBytes,
+        instanceDataCollection,
         GL_DYNAMIC_DRAW
     );
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 6, instanceDataCollection.size());
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 6, instanceDataCollectionSize);
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     // shaderProgram.unuse(); <-- need to fix, currently unuse frees the sprite from GPU. should remove that behavior

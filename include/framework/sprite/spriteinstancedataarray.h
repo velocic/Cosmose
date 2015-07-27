@@ -27,8 +27,8 @@ namespace Framework
                 SpriteInstanceDataArray(unsigned int maxSize);
                 ~SpriteInstanceDataArray();
                 const SpriteInstanceData *getCollection() const;
-                unsigned int getSize();
-                unsigned int getSizeInBytes();
+                unsigned int getSize() const;
+                unsigned int getSizeInBytes() const;
                 SpriteInstanceData &insert(SpriteInstanceData element);
                 SpriteInstanceData &insert();
                 void remove(unsigned int indexToRemove);

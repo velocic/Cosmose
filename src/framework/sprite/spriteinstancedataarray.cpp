@@ -37,12 +37,12 @@ const Framework::Sprite::SpriteInstanceData *Framework::Sprite::SpriteInstanceDa
     return collection.get();
 }
 
-unsigned int Framework::Sprite::SpriteInstanceDataArray::getSize()
+unsigned int Framework::Sprite::SpriteInstanceDataArray::getSize() const
 {
     return currentSize;
 }
 
-unsigned int Framework::Sprite::SpriteInstanceDataArray::getSizeInBytes()
+unsigned int Framework::Sprite::SpriteInstanceDataArray::getSizeInBytes() const
 {
     return (sizeof(Framework::Sprite::SpriteInstanceData) * currentSize);
 }

@@ -26,6 +26,8 @@ namespace Framework
                     unsigned int spriteCollectionMaxSize
                 );
                 const SpriteInstanceData *getInstanceData() const;
+                unsigned int getInstanceDataCollectionSize() const;
+                unsigned int getInstanceDataCollectionSizeInBytes() const;
                 template<typename SpriteType> std::unique_ptr<SpriteType> getSprite()
                 {
                     std::unique_ptr<SpriteType> spritePointer(
