@@ -6,7 +6,6 @@
 #include <opengl/texturecache.h>
 #include <memory>
 #include <string>
-#include <utility>
 
 namespace Framework
 {
@@ -29,11 +28,10 @@ namespace Framework
                 const SpriteInstanceData *getInstanceData() const;
                 template<typename SpriteType> std::unique_ptr<SpriteType> getSprite()
                 {
-                    SpriteInstanceData instanceData;
                     std::unique_ptr<SpriteType> spritePointer(
                         new SpriteType(
                             textureCache.getTexture(texturePath),
-                            instanceDataCollection.insert(instanceData),
+                            instanceDataCollection.insert(),
                             instanceDataCollection
                         )
                     );
