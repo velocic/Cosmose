@@ -6,8 +6,8 @@ Framework::Sprite::BasicSprite::BasicSprite(
     SpriteInstanceDataArray &parentInstanceCollection
 ) :
     spriteTexture(spriteTexture),
-    instanceData(instanceData),
-    parentInstanceCollection(parentInstanceCollection)
+    parentInstanceCollection(parentInstanceCollection),
+    instanceData(instanceData)
 {
     //hard-code BasicSprite's texture coordinates to
     //just use the full texture size

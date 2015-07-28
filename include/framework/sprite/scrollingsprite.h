@@ -1,6 +1,9 @@
 #ifndef SCROLLINGSPRITE_H
 #define SCROLLINGSPRITE_H
 
+#include <framework/sprite/basicsprite.h>
+#include <memory>
+
 namespace Framework
 {
     namespace Sprite
@@ -17,11 +20,11 @@ namespace Framework
                     std::shared_ptr<OpenGL::Texture> spriteTexture,
                     SpriteInstanceData &instanceData,
                     SpriteInstanceDataArray &parentInstanceCollection,
-                    float UVCoordinateAdvanceAmount,
+                    float UVCoordinateAdvancementAmount,
                     unsigned int frameDelay
                 );
                 void advanceFrameCount();
-        }
+        };
     }
 }
 
