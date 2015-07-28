@@ -89,6 +89,7 @@ int main()
         GL_NEAREST,
         false
     );
+    lavaTexture->bind();
     Framework::Sprite::SpriteManager backgroundSpriteCollection(
         textureCache,
         "lavabackground.png",
@@ -175,6 +176,8 @@ int main()
     sprites[2]->translate(glm::vec3(0, -1, 0));
     sprites[3]->translate(glm::vec3(-1, -1, 0));
     unsigned int frameCount = 0;
+    backgroundSprites[0]->scale(glm::vec3(2, 2, 0));
+    backgroundSprites[0]->translate(glm::vec3(-.5, -.5, 0));
     //END DEBUG
 
     //Event loop
@@ -189,6 +192,7 @@ int main()
         }
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        backgroundSprites[0]->advanceFrameCount();
         renderer.render(backgroundSpriteCollection.getInstanceData(), backgroundSpriteCollection.getInstanceDataCollectionSize(), backgroundSpriteCollection.getInstanceDataCollectionSizeInBytes());
         // renderer.render(spriteCollection.getInstanceData(), spriteCollection.getInstanceDataCollectionSize(), spriteCollection.getInstanceDataCollectionSizeInBytes());
         frameCount++;

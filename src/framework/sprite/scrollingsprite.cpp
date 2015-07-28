@@ -28,17 +28,17 @@ void Framework::Sprite::ScrollingSprite::advanceFrameCount()
 {
     ++framesDrawn;
 
-    if (frameDelay % framesDrawn == 0) {
+    if ((framesDrawn % frameDelay) == 0) {
         scrollUVCoordinates();
     }
 }
 
 void Framework::Sprite::ScrollingSprite::scrollUVCoordinates()
 {
-    instanceData.textureCoordinates.textureCoordinate1 += UVCoordinateAdvancementAmount;
-    instanceData.textureCoordinates.textureCoordinate2 += UVCoordinateAdvancementAmount;
-    instanceData.textureCoordinates.textureCoordinate3 += UVCoordinateAdvancementAmount;
-    instanceData.textureCoordinates.textureCoordinate4 += UVCoordinateAdvancementAmount;
-    instanceData.textureCoordinates.textureCoordinate5 += UVCoordinateAdvancementAmount;
-    instanceData.textureCoordinates.textureCoordinate6 += UVCoordinateAdvancementAmount;
+    instanceData.textureCoordinates.textureCoordinate1.x += UVCoordinateAdvancementAmount;
+    instanceData.textureCoordinates.textureCoordinate2.x += UVCoordinateAdvancementAmount;
+    instanceData.textureCoordinates.textureCoordinate3.x += UVCoordinateAdvancementAmount;
+    instanceData.textureCoordinates.textureCoordinate4.x += UVCoordinateAdvancementAmount;
+    instanceData.textureCoordinates.textureCoordinate5.x += UVCoordinateAdvancementAmount;
+    instanceData.textureCoordinates.textureCoordinate6.x += UVCoordinateAdvancementAmount;
 }
