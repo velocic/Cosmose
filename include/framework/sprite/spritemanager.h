@@ -3,6 +3,8 @@
 
 #include <framework/sprite/spriteinstancedata.h>
 #include <framework/sprite/spriteinstancedataarray.h>
+#include <framework/sprite/basicsprite.h>
+#include <framework/sprite/scrollingsprite.h>
 #include <opengl/texturecache.h>
 #include <memory>
 #include <string>
@@ -28,28 +30,17 @@ namespace Framework
                 const SpriteInstanceData *getInstanceData() const;
                 unsigned int getInstanceDataCollectionSize() const;
                 unsigned int getInstanceDataCollectionSizeInBytes() const;
-                template<typename SpriteType> std::unique_ptr<SpriteType> getSprite()
-                {
-                    std::unique_ptr<SpriteType> spritePointer(
-                        new SpriteType(
-                            textureCache.getTexture(texturePath),
-                            instanceDataCollection.insert(),
-                            instanceDataCollection
-                        )
-                    );
-                    return spritePointer;
-                }
-                template<typename SpriteType> std::unique_ptr<SpriteType> getSprite(SpriteType sourceSprite)
-                {
-                    std::unique_ptr<SpriteType> spritePointer(
-                        new SpriteType(
-                            textureCache.getTexture(texturePath),
-                            instanceDataCollection.insert(sourceSprite.getInstanceData()),
-                            instanceDataCollection
-                        )
-                    );
-                    return spritePointer;
-                }
+                std::unique_ptr<BasicSprite> getBasicSprite();
+                std::unique_ptr<BasicSprite> getBasicSprite(BasicSprite sourceSprite);
+                std::unique_ptr<ScrollingSprite> getScrollingSprite(
+                    float UVCoordinateAdvancementAmount,
+                    unsigned int frameDelay
+                );
+                std::unique_ptr<ScrollingSprite> getScrollingSprite(
+                    float UVCoordinateAdvancementAmount,
+                    unsigned int frameDelay,
+                    ScrollingSprite sourceSprite
+                );
         };
     }
 }

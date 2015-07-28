@@ -81,7 +81,7 @@ int main()
     );
     std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
     for (int i = 0; i < 4; ++i) {
-        sprites.push_back(spriteCollection.getSprite<Framework::Sprite::BasicSprite>());
+        sprites.push_back(spriteCollection.getBasicSprite());
         // sprites.back()->scale(glm::vec3(.05,.05,0));
     }
     Framework::Renderer::InstanceRenderer renderer(

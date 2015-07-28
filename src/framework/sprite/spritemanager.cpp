@@ -24,3 +24,62 @@ unsigned int Framework::Sprite::SpriteManager::getInstanceDataCollectionSizeInBy
 {
     return instanceDataCollection.getSizeInBytes();
 }
+
+std::unique_ptr<Framework::Sprite::BasicSprite> Framework::Sprite::SpriteManager::getBasicSprite()
+{
+    std::unique_ptr<Framework::Sprite::BasicSprite> spritePointer(
+        new Framework::Sprite::BasicSprite(
+            textureCache.getTexture(texturePath),
+            instanceDataCollection.insert(),
+            instanceDataCollection
+        )
+    );
+    return spritePointer;
+}
+
+std::unique_ptr<Framework::Sprite::BasicSprite> Framework::Sprite::SpriteManager::getBasicSprite(Framework::Sprite::BasicSprite sourceSprite)
+{
+    std::unique_ptr<Framework::Sprite::BasicSprite> spritePointer(
+        new Framework::Sprite::BasicSprite(
+            textureCache.getTexture(texturePath),
+            instanceDataCollection.insert(sourceSprite.getInstanceData()),
+            instanceDataCollection
+        )
+    );
+    return spritePointer;
+}
+
+std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteManager::getScrollingSprite(
+    float UVCoordinateAdvancementAmount,
+    unsigned int frameDelay
+)
+{
+    std::unique_ptr<Framework::Sprite::ScrollingSprite> spritePointer(
+        new Framework::Sprite::ScrollingSprite(
+            textureCache.getTexture(texturePath),
+            instanceDataCollection.insert(),
+            instanceDataCollection,
+            UVCoordinateAdvancementAmount,
+            frameDelay
+        )
+    );
+    return spritePointer;
+}
+
+std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteManager::getScrollingSprite(
+    float UVCoordinateAdvancementAmount,
+    unsigned int frameDelay,
+    Framework::Sprite::ScrollingSprite sourceSprite
+)
+{
+    std::unique_ptr<Framework::Sprite::ScrollingSprite> spritePointer(
+        new Framework::Sprite::ScrollingSprite(
+            textureCache.getTexture(texturePath),
+            instanceDataCollection.insert(sourceSprite.getInstanceData()),
+            instanceDataCollection,
+            UVCoordinateAdvancementAmount,
+            frameDelay
+        )
+    );
+    return spritePointer;
+}
