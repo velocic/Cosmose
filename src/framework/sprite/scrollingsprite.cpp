@@ -14,7 +14,7 @@ Framework::Sprite::ScrollingSprite::ScrollingSprite(
     framesDrawn(0)
 {
     if (scrollingViewportTextureWidth > 1.0f) {
-        throw std::logic_error("Error: Tried to set scrolling viewport texture with larger than 100% of texture width");
+        throw std::logic_error("Error: Tried to set scrolling texture viewport larger than 100% of texture width");
     }
     instanceData.textureCoordinates.textureCoordinate1 = glm::vec2(0.0f, 0.0f);
     instanceData.textureCoordinates.textureCoordinate2 = glm::vec2(1.0f, 0.0f);
