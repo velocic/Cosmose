@@ -83,8 +83,8 @@ int main()
 
     std::shared_ptr<OpenGL::Texture> lavaTexture = textureCache.loadTexture(
         "lavabackground.png",
-        GL_REPEAT,
-        GL_REPEAT,
+        GL_MIRRORED_REPEAT,
+        GL_MIRRORED_REPEAT,
         GL_NEAREST,
         GL_NEAREST,
         false
