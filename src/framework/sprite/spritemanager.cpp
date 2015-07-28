@@ -51,7 +51,8 @@ std::unique_ptr<Framework::Sprite::BasicSprite> Framework::Sprite::SpriteManager
 
 std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteManager::getScrollingSprite(
     float UVCoordinateAdvancementAmount,
-    unsigned int frameDelay
+    unsigned int frameDelay,
+    float scrollingViewportTextureWidth
 )
 {
     std::unique_ptr<Framework::Sprite::ScrollingSprite> spritePointer(
@@ -60,7 +61,8 @@ std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteMan
             instanceDataCollection.insert(),
             instanceDataCollection,
             UVCoordinateAdvancementAmount,
-            frameDelay
+            frameDelay,
+            scrollingViewportTextureWidth
         )
     );
     return spritePointer;
@@ -69,6 +71,7 @@ std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteMan
 std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteManager::getScrollingSprite(
     float UVCoordinateAdvancementAmount,
     unsigned int frameDelay,
+    float scrollingViewportTextureWidth,
     Framework::Sprite::ScrollingSprite sourceSprite
 )
 {
@@ -78,7 +81,8 @@ std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteMan
             instanceDataCollection.insert(sourceSprite.getInstanceData()),
             instanceDataCollection,
             UVCoordinateAdvancementAmount,
-            frameDelay
+            frameDelay,
+            scrollingViewportTextureWidth
         )
     );
     return spritePointer;

@@ -34,11 +34,13 @@ namespace Framework
                 std::unique_ptr<BasicSprite> getBasicSprite(BasicSprite sourceSprite);
                 std::unique_ptr<ScrollingSprite> getScrollingSprite(
                     float UVCoordinateAdvancementAmount,
-                    unsigned int frameDelay
+                    unsigned int frameDelay,
+                    float scrollingViewportTextureWidth
                 );
                 std::unique_ptr<ScrollingSprite> getScrollingSprite(
                     float UVCoordinateAdvancementAmount,
                     unsigned int frameDelay,
+                    float scrollingViewportTextureWidth,
                     ScrollingSprite sourceSprite
                 );
         };

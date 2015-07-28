@@ -10,6 +10,7 @@
 #include <opengl/texture.h>
 #include <framework/sprite/spritemanager.h>
 #include <framework/sprite/basicsprite.h>
+#include <framework/sprite/scrollingsprite.h>
 #include <framework/sprite/spriteinstancedata.h>
 #include <framework/sprite/spritetexturecoordinates.h>
 #include <framework/renderer/instancerenderer.h>
@@ -79,11 +80,35 @@ int main()
         "demotexture.png",
         4
     );
+
+    std::shared_ptr<OpenGL::Texture> lavaTexture = textureCache.loadTexture(
+        "lavabackground.png",
+        GL_REPEAT,
+        GL_REPEAT,
+        GL_NEAREST,
+        GL_NEAREST,
+        false
+    );
+    Framework::Sprite::SpriteManager backgroundSpriteCollection(
+        textureCache,
+        "lavabackground.png",
+        1
+    );
     std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
     for (int i = 0; i < 4; ++i) {
         sprites.push_back(spriteCollection.getBasicSprite());
         // sprites.back()->scale(glm::vec3(.05,.05,0));
     }
+
+    std::vector<std::unique_ptr<Framework::Sprite::ScrollingSprite>> backgroundSprites;
+    for (int i = 0; i < 1; ++i) {
+        backgroundSprites.push_back(backgroundSpriteCollection.getScrollingSprite(
+            0.01f,
+            1,
+            .5f
+        ));
+    }
+
     Framework::Renderer::InstanceRenderer renderer(
         shaderProgram,
         modelBuffer
@@ -164,7 +189,8 @@ int main()
         }
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        renderer.render(spriteCollection.getInstanceData(), spriteCollection.getInstanceDataCollectionSize(), spriteCollection.getInstanceDataCollectionSizeInBytes());
+        renderer.render(backgroundSpriteCollection.getInstanceData(), backgroundSpriteCollection.getInstanceDataCollectionSize(), backgroundSpriteCollection.getInstanceDataCollectionSizeInBytes());
+        // renderer.render(spriteCollection.getInstanceData(), spriteCollection.getInstanceDataCollectionSize(), spriteCollection.getInstanceDataCollectionSizeInBytes());
         frameCount++;
         if (frameCount % 120 == 0) {
             sprites[0] = nullptr;

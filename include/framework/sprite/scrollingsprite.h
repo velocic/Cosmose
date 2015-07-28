@@ -3,6 +3,7 @@
 
 #include <framework/sprite/basicsprite.h>
 #include <memory>
+#include <stdexcept>
 
 namespace Framework
 {
@@ -21,7 +22,8 @@ namespace Framework
                     SpriteInstanceData &instanceData,
                     SpriteInstanceDataArray &parentInstanceCollection,
                     float UVCoordinateAdvancementAmount,
-                    unsigned int frameDelay
+                    unsigned int frameDelay,
+                    float scrollingViewportTextureWidth
                 );
                 void advanceFrameCount();
         };
