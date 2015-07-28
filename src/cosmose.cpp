@@ -30,9 +30,9 @@ int main()
         "Cosmose",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        640,
-        480,
-        SDL_WINDOW_OPENGL
+        1920,
+        1080,
+        SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN
     );
     OpenGL::Context glContext(window);
 
@@ -186,7 +186,7 @@ int main()
 
     while (userRequestedExit == false) {
         while (SDL_PollEvent(&e)) {
-            if (e.key.keysym.sym == SDLK_ESCAPE || e.type == SDL_QUIT) {
+            if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
                 userRequestedExit = true;
             }
         }
