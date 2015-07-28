@@ -2,10 +2,12 @@
 
 Framework::Sprite::BasicSprite::BasicSprite(
     std::shared_ptr<OpenGL::Texture> spriteTexture,
-    SpriteInstanceData &instanceData
+    SpriteInstanceData &instanceData,
+    SpriteInstanceDataArray &parentInstanceCollection
 ) :
     spriteTexture(spriteTexture),
-    instanceData(instanceData)
+    instanceData(instanceData),
+    parentInstanceCollection(parentInstanceCollection)
 {
     //hard-code BasicSprite's texture coordinates to
     //just use the full texture size
@@ -19,8 +21,7 @@ Framework::Sprite::BasicSprite::BasicSprite(
 
 Framework::Sprite::BasicSprite::~BasicSprite()
 {
-    instanceData.isFlaggedForDeletion = true;
-    scale(glm::vec3(0, 0, 0));
+    parentInstanceCollection.remove(instanceData.parentArrayIndex);
 }
 
 const Framework::Sprite::SpriteInstanceData &Framework::Sprite::BasicSprite::getInstanceData() const

@@ -13,7 +13,7 @@ namespace Framework
             glm::mat4 MVPMatrix;
             SpriteTextureCoordinates textureCoordinates;
             glm::vec4 colorModifier;
-            bool isFlaggedForDeletion = false;
+            unsigned int parentArrayIndex;
         };
     }
 }

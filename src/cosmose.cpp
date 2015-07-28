@@ -8,7 +8,7 @@
 #include <glm/gtx/string_cast.hpp>
 #include <opengl/texturecache.h>
 #include <opengl/texture.h>
-#include <framework/sprite/spritecollection.h>
+#include <framework/sprite/spritemanager.h>
 #include <framework/sprite/basicsprite.h>
 #include <framework/sprite/spriteinstancedata.h>
 #include <framework/sprite/spritetexturecoordinates.h>
@@ -74,14 +74,15 @@ int main()
     );
     debugTexture->bind();
 
-    Framework::Sprite::SpriteCollection spriteCollection(
+    Framework::Sprite::SpriteManager spriteCollection(
         textureCache,
-        "demotexture.png"
+        "demotexture.png",
+        4
     );
     std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
-    for (int i = 0; i < 100000; ++i) {
+    for (int i = 0; i < 4; ++i) {
         sprites.push_back(spriteCollection.getSprite<Framework::Sprite::BasicSprite>());
-        sprites.back()->scale(glm::vec3(.05,.05,0));
+        // sprites.back()->scale(glm::vec3(.05,.05,0));
     }
     Framework::Renderer::InstanceRenderer renderer(
         shaderProgram,
@@ -144,7 +145,11 @@ int main()
         (GLvoid *)(sizeof(Framework::Sprite::SpriteInstanceData::MVPMatrix) + sizeof(Framework::Sprite::SpriteTextureCoordinates)),
         1
     );
-    sprites[0]->translate(glm::vec3(-1, -1, 0));
+    // sprites[0]->translate(glm::vec3(-1, -1, 0));
+    sprites[1]->translate(glm::vec3(-1, 0, 0));
+    sprites[2]->translate(glm::vec3(0, -1, 0));
+    sprites[3]->translate(glm::vec3(-1, -1, 0));
+    unsigned int frameCount = 0;
     //END DEBUG
 
     //Event loop
@@ -159,7 +164,20 @@ int main()
         }
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        renderer.render(spriteCollection.getInstanceData());
+        renderer.render(spriteCollection.getInstanceData(), spriteCollection.getInstanceDataCollectionSize(), spriteCollection.getInstanceDataCollectionSizeInBytes());
+        frameCount++;
+        if (frameCount % 120 == 0) {
+            sprites[0] = nullptr;
+        }
+        if (frameCount % 240 == 0) {
+            sprites[1] = nullptr;
+        }
+        if (frameCount % 360 == 0) {
+            sprites[2] = nullptr;
+        }
+        if (frameCount % 480 == 0) {
+            sprites[3] = nullptr;
+        }
         SDL_GL_SwapWindow(window.getWindow());
     }
 

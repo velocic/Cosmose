@@ -29,7 +29,11 @@ namespace Framework
                     GLvoid *dataPointer,
                     GLuint vertexAttributeDivisor
                 );
-                void render(const std::vector<Framework::Sprite::SpriteInstanceData> &instanceDataCollection);
+                void render(
+                    const Framework::Sprite::SpriteInstanceData *instanceDataCollection,
+                    unsigned int instanceDataCollectionSize,
+                    unsigned int instanceDataCollectionSizeInBytes
+                );
         };
     }
 }
