@@ -65,40 +65,33 @@ int main()
     shaderProgram.link();
 
     OpenGL::TextureCache textureCache;
-    std::shared_ptr<OpenGL::Texture> debugTexture = textureCache.loadTexture(
-        "demotexture.png",
-        GL_REPEAT,
-        GL_REPEAT,
-        GL_NEAREST,
-        GL_NEAREST,
-        false
-    );
-    debugTexture->bind();
 
     Framework::Sprite::SpriteManager spriteCollection(
-        textureCache,
-        "demotexture.png",
+        textureCache.loadTexture(
+            "demotexture.png",
+            GL_REPEAT,
+            GL_REPEAT,
+            GL_NEAREST,
+            GL_NEAREST,
+            false
+        ),
         4
     );
 
-    std::shared_ptr<OpenGL::Texture> lavaTexture = textureCache.loadTexture(
-        "lavabackground.png",
-        GL_MIRRORED_REPEAT,
-        GL_MIRRORED_REPEAT,
-        GL_NEAREST,
-        GL_NEAREST,
-        false
-    );
-    lavaTexture->bind();
     Framework::Sprite::SpriteManager backgroundSpriteCollection(
-        textureCache,
-        "lavabackground.png",
+        textureCache.loadTexture(
+            "lavabackground.png",
+            GL_MIRRORED_REPEAT,
+            GL_MIRRORED_REPEAT,
+            GL_NEAREST,
+            GL_NEAREST,
+            false
+        ),
         1
     );
     std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
     for (int i = 0; i < 4; ++i) {
         sprites.push_back(spriteCollection.getBasicSprite());
-        // sprites.back()->scale(glm::vec3(.05,.05,0));
     }
 
     std::vector<std::unique_ptr<Framework::Sprite::ScrollingSprite>> backgroundSprites;
@@ -193,8 +186,8 @@ int main()
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         backgroundSprites[0]->advanceFrameCount();
-        renderer.render(backgroundSpriteCollection.getInstanceData(), backgroundSpriteCollection.getInstanceDataCollectionSize(), backgroundSpriteCollection.getInstanceDataCollectionSizeInBytes());
-        // renderer.render(spriteCollection.getInstanceData(), spriteCollection.getInstanceDataCollectionSize(), spriteCollection.getInstanceDataCollectionSizeInBytes());
+        renderer.render(backgroundSpriteCollection.getInstanceData(), backgroundSpriteCollection.getSpriteTexture(), backgroundSpriteCollection.getInstanceDataCollectionSize(), backgroundSpriteCollection.getInstanceDataCollectionSizeInBytes());
+        renderer.render(spriteCollection.getInstanceData(), spriteCollection.getSpriteTexture(), spriteCollection.getInstanceDataCollectionSize(), spriteCollection.getInstanceDataCollectionSizeInBytes());
         frameCount++;
         if (frameCount % 120 == 0) {
             sprites[0] = nullptr;

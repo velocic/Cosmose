@@ -1,7 +1,7 @@
 #include <framework/sprite/scrollingsprite.h>
 
 Framework::Sprite::ScrollingSprite::ScrollingSprite(
-    std::shared_ptr<OpenGL::Texture> spriteTexture,
+    std::weak_ptr<OpenGL::Texture> spriteTexture,
     SpriteInstanceData &instanceData,
     SpriteInstanceDataArray &parentInstanceCollection,
     float UVCoordinateAdvancementAmount,

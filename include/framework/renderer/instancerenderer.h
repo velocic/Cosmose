@@ -4,6 +4,8 @@
 #include <framework/sprite/spriteinstancedata.h>
 #include <glm/glm.hpp>
 #include <opengl/programlinker.h>
+#include <opengl/texture.h>
+#include <memory>
 #include <vector>
 
 namespace Framework
@@ -31,6 +33,7 @@ namespace Framework
                 );
                 void render(
                     const Framework::Sprite::SpriteInstanceData *instanceDataCollection,
+                    std::weak_ptr<OpenGL::Texture> spriteTexture,
                     unsigned int instanceDataCollectionSize,
                     unsigned int instanceDataCollectionSizeInBytes
                 );

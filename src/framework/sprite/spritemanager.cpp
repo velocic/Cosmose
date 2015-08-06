@@ -1,14 +1,17 @@
 #include <framework/sprite/spritemanager.h>
 
 Framework::Sprite::SpriteManager::SpriteManager(
-    OpenGL::TextureCache &textureCache,
-    std::string texturePath,
+    std::shared_ptr<OpenGL::Texture> spriteTexture,
     unsigned int spriteCollectionMaxSize
 ) :
-    textureCache(textureCache),
-    texturePath(texturePath),
+    spriteTexture(spriteTexture),
     instanceDataCollection(SpriteInstanceDataArray(spriteCollectionMaxSize))
 {}
+
+Framework::Sprite::SpriteManager::~SpriteManager()
+{
+    spriteTexture = nullptr;
+}
 
 const Framework::Sprite::SpriteInstanceData *Framework::Sprite::SpriteManager::getInstanceData() const
 {
@@ -29,7 +32,7 @@ std::unique_ptr<Framework::Sprite::BasicSprite> Framework::Sprite::SpriteManager
 {
     std::unique_ptr<Framework::Sprite::BasicSprite> spritePointer(
         new Framework::Sprite::BasicSprite(
-            textureCache.getTexture(texturePath),
+            std::weak_ptr<OpenGL::Texture>(spriteTexture),
             instanceDataCollection.insert(),
             instanceDataCollection
         )
@@ -41,7 +44,7 @@ std::unique_ptr<Framework::Sprite::BasicSprite> Framework::Sprite::SpriteManager
 {
     std::unique_ptr<Framework::Sprite::BasicSprite> spritePointer(
         new Framework::Sprite::BasicSprite(
-            textureCache.getTexture(texturePath),
+            std::weak_ptr<OpenGL::Texture>(spriteTexture),
             instanceDataCollection.insert(sourceSprite.getInstanceData()),
             instanceDataCollection
         )
@@ -57,7 +60,7 @@ std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteMan
 {
     std::unique_ptr<Framework::Sprite::ScrollingSprite> spritePointer(
         new Framework::Sprite::ScrollingSprite(
-            textureCache.getTexture(texturePath),
+            std::weak_ptr<OpenGL::Texture>(spriteTexture),
             instanceDataCollection.insert(),
             instanceDataCollection,
             UVCoordinateAdvancementAmount,
@@ -77,7 +80,7 @@ std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteMan
 {
     std::unique_ptr<Framework::Sprite::ScrollingSprite> spritePointer(
         new Framework::Sprite::ScrollingSprite(
-            textureCache.getTexture(texturePath),
+            std::weak_ptr<OpenGL::Texture>(spriteTexture),
             instanceDataCollection.insert(sourceSprite.getInstanceData()),
             instanceDataCollection,
             UVCoordinateAdvancementAmount,
@@ -86,4 +89,15 @@ std::unique_ptr<Framework::Sprite::ScrollingSprite> Framework::Sprite::SpriteMan
         )
     );
     return spritePointer;
+}
+
+std::weak_ptr<OpenGL::Texture> Framework::Sprite::SpriteManager::getSpriteTexture()
+{
+    return std::weak_ptr<OpenGL::Texture>(spriteTexture);
+}
+
+void Framework::Sprite::SpriteManager::purge()
+{
+    spriteTexture = nullptr;
+    // clear out instanceDataCollection
 }
