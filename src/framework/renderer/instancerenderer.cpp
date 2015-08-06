@@ -52,11 +52,17 @@ void Framework::Renderer::InstanceRenderer::enableVertexAttribPointer(
 
 void Framework::Renderer::InstanceRenderer::render(
     const Framework::Sprite::SpriteInstanceData *instanceDataCollection,
+    std::weak_ptr<OpenGL::Texture> spriteTexture,
     unsigned int instanceDataCollectionSize,
     unsigned int instanceDataCollectionSizeInBytes
 )
 {
+    if (spriteTexture.expired()) {
+        throw std::logic_error("Error: tried to bind a null texture at render time.");
+    }
+
     shaderProgram.use();
+    spriteTexture.lock()->bind();
     glBindVertexArray(instanceDataArray);
     glBindBuffer(GL_ARRAY_BUFFER, instanceDataBuffer);
     glBufferData(

@@ -1,7 +1,7 @@
 #include <framework/sprite/basicsprite.h>
 
 Framework::Sprite::BasicSprite::BasicSprite(
-    std::shared_ptr<OpenGL::Texture> spriteTexture,
+    std::weak_ptr<OpenGL::Texture> spriteTexture,
     SpriteInstanceData &instanceData,
     SpriteInstanceDataArray &parentInstanceCollection
 ) :
@@ -29,7 +29,7 @@ const Framework::Sprite::SpriteInstanceData &Framework::Sprite::BasicSprite::get
     return instanceData;
 }
 
-std::shared_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() const
+std::weak_ptr<OpenGL::Texture> Framework::Sprite::BasicSprite::getTexture() const
 {
     return spriteTexture;
 }
