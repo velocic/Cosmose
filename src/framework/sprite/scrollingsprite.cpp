@@ -19,9 +19,7 @@ Framework::Sprite::ScrollingSprite::ScrollingSprite(
     instanceData.textureCoordinates.textureCoordinate1 = glm::vec2(0.0f, 0.0f);
     instanceData.textureCoordinates.textureCoordinate2 = glm::vec2(1.0f, 0.0f);
     instanceData.textureCoordinates.textureCoordinate3 = glm::vec2(1.0f, scrollingViewportTextureWidth);
-    instanceData.textureCoordinates.textureCoordinate4 = glm::vec2(0.0f, 0.0f);
-    instanceData.textureCoordinates.textureCoordinate5 = glm::vec2(0.0f, scrollingViewportTextureWidth);
-    instanceData.textureCoordinates.textureCoordinate6 = glm::vec2(1.0f, scrollingViewportTextureWidth);
+    instanceData.textureCoordinates.textureCoordinate4 = glm::vec2(0.0f, scrollingViewportTextureWidth);
 }
 
 void Framework::Sprite::ScrollingSprite::advanceFrameCount()
@@ -39,6 +37,4 @@ void Framework::Sprite::ScrollingSprite::scrollUVCoordinates()
     instanceData.textureCoordinates.textureCoordinate2.x += UVCoordinateAdvancementAmount;
     instanceData.textureCoordinates.textureCoordinate3.x += UVCoordinateAdvancementAmount;
     instanceData.textureCoordinates.textureCoordinate4.x += UVCoordinateAdvancementAmount;
-    instanceData.textureCoordinates.textureCoordinate5.x += UVCoordinateAdvancementAmount;
-    instanceData.textureCoordinates.textureCoordinate6.x += UVCoordinateAdvancementAmount;
 }

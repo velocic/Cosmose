@@ -17,10 +17,11 @@ namespace Framework
             private:
                 ProgramLinker &shaderProgram;
                 GLuint modelDataBuffer;
+                GLuint indexDataBuffer;
                 GLuint instanceDataBuffer;
                 GLuint instanceDataArray;
             public:
-                InstanceRenderer(ProgramLinker &shaderProgram, GLuint modelDataBuffer);
+                InstanceRenderer(ProgramLinker &shaderProgram, GLuint modelDataBuffer, GLuint indexDataBuffer);
                 ~InstanceRenderer();
                 void enableVertexAttribPointer(
                     GLuint vertexAttributeIndex,

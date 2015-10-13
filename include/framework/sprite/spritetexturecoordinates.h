@@ -13,8 +13,6 @@ namespace Framework
             glm::vec2 textureCoordinate2;
             glm::vec2 textureCoordinate3;
             glm::vec2 textureCoordinate4;
-            glm::vec2 textureCoordinate5;
-            glm::vec2 textureCoordinate6;
         };
     }
 }

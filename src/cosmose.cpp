@@ -40,22 +40,31 @@ int main()
         std::cout << "gl3w failed to initialize OpenGL" << std::endl;
         return EXIT_FAILURE;
     }
+
     //Buffer a quad that will be used for ALL sprites (scaled, rotated, and transformed as needed)
-    //Note: needs to be modified to only use 4 points to work properly with SpriteTextureData struct
     float quadVertices[] = {
         //x,y
         0.0f, 0.0f,
         1.0f, 0.0f,
         1.0f, 1.0f,
-        0.0f, 0.0f,
         0.0f, 1.0f,
-        1.0f, 1.0f,
     };
     GLuint modelBuffer;
     glGenBuffers(1, &modelBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, modelBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    GLubyte indices[] = {
+        0, 1, 2, //Triangle 1
+        0, 2, 3  //Triangle 2
+    };
+
+    GLuint indexBuffer;
+    glGenBuffers(1, &indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     //DEBUG
     Shader basicVertexShader(GL_VERTEX_SHADER, "src/shaders/instancedsprite.vert");
@@ -105,7 +114,8 @@ int main()
 
     Framework::Renderer::InstanceRenderer renderer(
         shaderProgram,
-        modelBuffer
+        modelBuffer,
+        indexBuffer
     );
     //Setup vertex attrib pointer for sprite MVP matrix (must be done 1 row at a time)
     renderer.enableVertexAttribPointer(
@@ -205,5 +215,6 @@ int main()
     }
 
     SDL_Quit();
+
     return EXIT_SUCCESS;
 }

@@ -1,7 +1,7 @@
 #include <framework/renderer/instancerenderer.h>
 
-Framework::Renderer::InstanceRenderer::InstanceRenderer(ProgramLinker &shaderProgram, GLuint modelDataBuffer)
-    : shaderProgram(shaderProgram), modelDataBuffer(modelDataBuffer)
+Framework::Renderer::InstanceRenderer::InstanceRenderer(ProgramLinker &shaderProgram, GLuint modelDataBuffer, GLuint indexDataBuffer)
+    : shaderProgram(shaderProgram), modelDataBuffer(modelDataBuffer), indexDataBuffer(indexDataBuffer)
 {
     glGenBuffers(1, &instanceDataBuffer);
     glGenVertexArrays(1, &instanceDataArray);
@@ -71,7 +71,8 @@ void Framework::Renderer::InstanceRenderer::render(
         instanceDataCollection,
         GL_DYNAMIC_DRAW
     );
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 6, instanceDataCollectionSize);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexDataBuffer);
+    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, (void *)0, instanceDataCollectionSize);
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     // shaderProgram.unuse(); <-- need to fix, currently unuse frees the sprite from GPU. should remove that behavior

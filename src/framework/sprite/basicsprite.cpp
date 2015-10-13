@@ -14,9 +14,7 @@ Framework::Sprite::BasicSprite::BasicSprite(
     instanceData.textureCoordinates.textureCoordinate1 = glm::vec2(0.0f, 0.0f);
     instanceData.textureCoordinates.textureCoordinate2 = glm::vec2(1.0f, 0.0f);
     instanceData.textureCoordinates.textureCoordinate3 = glm::vec2(1.0f, 1.0f);
-    instanceData.textureCoordinates.textureCoordinate4 = glm::vec2(0.0f, 0.0f);
-    instanceData.textureCoordinates.textureCoordinate5 = glm::vec2(0.0f, 1.0f);
-    instanceData.textureCoordinates.textureCoordinate6 = glm::vec2(1.0f, 1.0f);
+    instanceData.textureCoordinates.textureCoordinate4 = glm::vec2(0.0f, 1.0f);
 }
 
 Framework::Sprite::BasicSprite::~BasicSprite()
