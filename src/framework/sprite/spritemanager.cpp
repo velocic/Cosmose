@@ -10,7 +10,7 @@ Framework::Sprite::SpriteManager::SpriteManager(
 
 Framework::Sprite::SpriteManager::~SpriteManager()
 {
-    spriteTexture = nullptr;
+    purge();
 }
 
 const Framework::Sprite::SpriteInstanceData *Framework::Sprite::SpriteManager::getInstanceData() const
@@ -99,5 +99,5 @@ std::weak_ptr<OpenGL::Texture> Framework::Sprite::SpriteManager::getSpriteTextur
 void Framework::Sprite::SpriteManager::purge()
 {
     spriteTexture = nullptr;
-    // clear out instanceDataCollection
+    instanceDataCollection.purge();
 }

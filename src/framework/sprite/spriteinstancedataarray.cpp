@@ -77,3 +77,9 @@ void Framework::Sprite::SpriteInstanceDataArray::remove(unsigned int indexToRemo
     collection.get()[indexToRemove] = collection.get()[currentSize-1];
     --currentSize;
 }
+
+void Framework::Sprite::SpriteInstanceDataArray::purge()
+{
+    collection = nullptr;
+    currentSize = 0;
+}

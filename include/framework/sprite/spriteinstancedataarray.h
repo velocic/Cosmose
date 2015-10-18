@@ -32,6 +32,7 @@ namespace Framework
                 SpriteInstanceData &insert(SpriteInstanceData element);
                 SpriteInstanceData &insert();
                 void remove(unsigned int indexToRemove);
+                void purge();
         };
     }
 }
