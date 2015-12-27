@@ -15,7 +15,24 @@ namespace Framework
                 std::unordered_map<std::string, std::vector<SpriteTextureCoordinates>> animations;
                 std::unordered_map<std::string, AnimationMetaData> animationData;
             public:
-                AnimationGroup();
+                //copy constructor
+                AnimationGroup(
+                    std::unordered_map<std::string, std::vector<SpriteTextureCoordinates>> &animations,
+                    std::unordered_map<std::string, AnimationMetaData> &animationData
+                ) : 
+                    animations(animations),
+                    animationData(animationData)
+                {}
+
+                //move constructor
+                AnimationGroup(
+                    std::unordered_map<std::string, std::vector<SpriteTextureCoordinates>> &&animations,
+                    std::unordered_map<std::string, AnimationMetaData> &&animationData
+                ) :
+                    animations(std::move(animations)),
+                    animationData(std::move(animationData))
+                {}
+
                 const SpriteTextureCoordinates &getAnimationFrame(std::string animationName, unsigned int sequenceNumber);
                 const AnimationMetaData &getAnimationData(std::string animationName);
         };

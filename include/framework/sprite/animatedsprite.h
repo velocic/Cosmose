@@ -1,6 +1,7 @@
 #ifndef ANIMATEDSPRITE_H
 #define ANIMATEDSPRITE_H
 
+#include <framework/sprite/basicsprite.h>
 #include <framework/sprite/spritetexturecoordinates.h>
 #include <opengl/texture.h>
 #include <memory>

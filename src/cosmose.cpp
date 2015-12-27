@@ -77,7 +77,7 @@ int main()
 
     Framework::Sprite::SpriteManager spriteCollection(
         textureCache.loadTexture(
-            "demotexture.png",
+            "test-images/demotexture.png",
             GL_REPEAT,
             GL_REPEAT,
             GL_NEAREST,
@@ -89,7 +89,7 @@ int main()
 
     Framework::Sprite::SpriteManager backgroundSpriteCollection(
         textureCache.loadTexture(
-            "lavabackground.png",
+            "test-images/lavabackground.png",
             GL_MIRRORED_REPEAT,
             GL_MIRRORED_REPEAT,
             GL_NEAREST,

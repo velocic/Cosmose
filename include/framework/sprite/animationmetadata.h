@@ -9,9 +9,8 @@ namespace Framework
     {
         struct AnimationMetaData
         {
-            int defaultFramesBetweenAnimationCells;
-            int animationCellCount;
-            std::string animationName;
+            unsigned int framesBetweenAnimationCells = 0;
+            unsigned int animationCellCount = 0;
         };
     }
 }

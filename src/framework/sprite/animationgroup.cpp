@@ -2,7 +2,6 @@
 
 Framework::Sprite::AnimationGroup::AnimationGroup()
 {
-    //TODO: fill in once format of spritesheet coordinate file looks like
 }
 
 const SpriteTextureCoordinates &Framework::Sprite::AnimationGroup::getAnimationFrame(std::string animationName, unsigned int sequenceNumber)
