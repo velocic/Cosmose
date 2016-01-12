@@ -10,9 +10,9 @@ Framework::Sprite::AnimatedSprite::AnimatedSprite(
 ) :
     BasicSprite(spriteTexture, instanceData, parentInstanceCollection),
     animations(animations),
-    framesBetweenAnimationCells(framesBetweenAnimationCells)
+    framesBetweenAnimationCells(framesBetweenAnimationCells),
     currentAnimation(startingAnimation),
-    framesDrawn(0)
+    framesDrawn(0),
     currentAnimationFrameIndex(0)
 {
 }

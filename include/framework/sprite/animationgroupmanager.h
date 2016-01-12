@@ -15,6 +15,8 @@ namespace Framework
         {
             private:
                 std::unordered_map<std::string, std::shared_ptr<AnimationGroup>> animationGroups;
+                AnimationMetaData parseAnimationMetaData(tinyxml2::XMLElement* animationRootElement);
+                SpriteTextureCoordinates parseAnimationCellData(tinyxml2::XMLElement* spriteElement, unsigned int textureAtlasWidth, unsigned int textureAtlasHeight);
             public:
                 AnimationGroupManager();
                 std::weak_ptr<AnimationGroup> getAnimationGroup(std::string filePath);

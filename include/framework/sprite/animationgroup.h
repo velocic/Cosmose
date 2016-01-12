@@ -2,8 +2,10 @@
 #define ANIMATIONGROUP_H
 
 #include <framework/sprite/animationmetadata.h>
+#include <framework/sprite/spritetexturecoordinates.h>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 namespace Framework
 {
