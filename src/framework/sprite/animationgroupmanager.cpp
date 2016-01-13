@@ -2,6 +2,7 @@
 
 std::weak_ptr<Framework::Sprite::AnimationGroup> Framework::Sprite::AnimationGroupManager::getAnimationGroup(std::string filePath)
 {
+    return std::weak_ptr<AnimationGroup>(animationGroups.find(filePath)->second);
 }
 
 void Framework::Sprite::AnimationGroupManager::createAnimationGroupFromXMLFile(std::string filePath)
