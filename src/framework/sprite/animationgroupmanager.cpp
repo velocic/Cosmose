@@ -5,13 +5,14 @@ std::weak_ptr<Framework::Sprite::AnimationGroup> Framework::Sprite::AnimationGro
     return std::weak_ptr<AnimationGroup>(animationGroups.find(filePath)->second);
 }
 
-void Framework::Sprite::AnimationGroupManager::createAnimationGroupFromXMLFile(std::string filePath)
+bool Framework::Sprite::AnimationGroupManager::createAnimationGroupFromXMLFile(std::string filePath)
 {
     tinyxml2::XMLDocument spriteSheetMetaData;
-    bool loadSuccessful = spriteSheetMetaData.LoadFile(filePath.c_str());
+    auto loadSuccessful = spriteSheetMetaData.LoadFile(filePath.c_str());
 
-    if (!loadSuccessful) {
-        return;
+    if (loadSuccessful != tinyxml2::XML_SUCCESS)
+    {
+        return false;
     }
 
     std::unordered_map<std::string, std::vector<SpriteTextureCoordinates>> animations;
@@ -23,7 +24,7 @@ void Framework::Sprite::AnimationGroupManager::createAnimationGroupFromXMLFile(s
 
     std::string animationName;
 
-    //Parse each animation out of the texture atlas
+    //Parse each animation of the texture atlas from the XML file
     for (auto animation = root->FirstChildElement("animation"); animation != NULL; animation = animation->NextSiblingElement("animation")) {
 
         animationName = animation->Attribute("name");
@@ -57,10 +58,12 @@ void Framework::Sprite::AnimationGroupManager::createAnimationGroupFromXMLFile(s
 
     animationGroups.insert(
         std::make_pair(
-            animationName,
+            filePath,
             animationGroupPtr
         )
     );
+
+    return true;
 }
 
 Framework::Sprite::AnimationMetaData Framework::Sprite::AnimationGroupManager::parseAnimationMetaData(tinyxml2::XMLElement* animationRootElement)

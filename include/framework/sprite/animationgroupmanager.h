@@ -18,9 +18,8 @@ namespace Framework
                 AnimationMetaData parseAnimationMetaData(tinyxml2::XMLElement* animationRootElement);
                 SpriteTextureCoordinates parseAnimationCellData(tinyxml2::XMLElement* spriteElement, unsigned int textureAtlasWidth, unsigned int textureAtlasHeight);
             public:
-                AnimationGroupManager();
                 std::weak_ptr<AnimationGroup> getAnimationGroup(std::string filePath);
-                void createAnimationGroupFromXMLFile(std::string filePath);
+                bool createAnimationGroupFromXMLFile(std::string filePath);
         };
     }
 }

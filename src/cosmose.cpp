@@ -9,6 +9,8 @@
 #include <opengl/texturecache.h>
 #include <opengl/texture.h>
 #include <framework/sprite/spritemanager.h>
+#include <framework/sprite/animatedsprite.h>
+#include <framework/sprite/animationgroupmanager.h>
 #include <framework/sprite/basicsprite.h>
 #include <framework/sprite/scrollingsprite.h>
 #include <framework/sprite/spriteinstancedata.h>
@@ -98,6 +100,23 @@ int main()
         ),
         1
     );
+
+    //Load the dummy sprite sheet to test out the animate sprite
+    Framework::Sprite::SpriteManager animatedSpriteCollection(
+        textureCache.loadTexture(
+            "test-images/TestBrickSpriteSheet.png",
+            GL_REPEAT,
+            GL_REPEAT,
+            GL_NEAREST,
+            GL_NEAREST,
+            false
+        ),
+        1
+    );
+
+    Framework::Sprite::AnimationGroupManager animationGroups;
+    animationGroups.createAnimationGroupFromXMLFile("test-images/TestBrickSpriteSheet.xml");
+
     std::vector<std::unique_ptr<Framework::Sprite::BasicSprite>> sprites;
     for (int i = 0; i < 4; ++i) {
         sprites.push_back(spriteCollection.getBasicSprite());
@@ -111,6 +130,15 @@ int main()
             .5f
         ));
     }
+
+    std::vector<std::unique_ptr<Framework::Sprite::AnimatedSprite>> animatedSprites;
+    animatedSprites.push_back(
+        animatedSpriteCollection.getAnimatedSprite(
+            animationGroups.getAnimationGroup("test-images/TestBrickSpriteSheet.xml"),
+            "ColoredBricks",
+            30
+        )
+    );
 
     Framework::Renderer::InstanceRenderer renderer(
         shaderProgram,

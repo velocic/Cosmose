@@ -28,6 +28,22 @@ unsigned int Framework::Sprite::SpriteManager::getInstanceDataCollectionSizeInBy
     return instanceDataCollection.getSizeInBytes();
 }
 
+
+std::unique_ptr<Framework::Sprite::AnimatedSprite> Framework::Sprite::SpriteManager::getAnimatedSprite(std::weak_ptr<AnimationGroup> animations, std::string startingAnimation, unsigned int framesBetweenAnimationCells)
+{
+    std::unique_ptr<Framework::Sprite::AnimatedSprite> spritePointer(
+        new Framework::Sprite::AnimatedSprite(
+            std::weak_ptr<OpenGL::Texture>(spriteTexture),
+            instanceDataCollection.insert(),
+            instanceDataCollection,
+            animations,
+            startingAnimation,
+            framesBetweenAnimationCells
+        )
+    );
+    return spritePointer;
+}
+
 std::unique_ptr<Framework::Sprite::BasicSprite> Framework::Sprite::SpriteManager::getBasicSprite()
 {
     std::unique_ptr<Framework::Sprite::BasicSprite> spritePointer(

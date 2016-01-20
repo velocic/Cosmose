@@ -1,10 +1,11 @@
 #ifndef SPRITEMANAGER_H
 #define SPRITEMANAGER_H
 
-#include <framework/sprite/spriteinstancedata.h>
-#include <framework/sprite/spriteinstancedataarray.h>
+#include <framework/sprite/animatedsprite.h>
 #include <framework/sprite/basicsprite.h>
 #include <framework/sprite/scrollingsprite.h>
+#include <framework/sprite/spriteinstancedata.h>
+#include <framework/sprite/spriteinstancedataarray.h>
 #include <opengl/texture.h>
 #include <memory>
 #include <string>
@@ -15,6 +16,7 @@ namespace Framework
     {
         class SpriteManager
         {
+
             private:
                 std::shared_ptr<OpenGL::Texture> spriteTexture;
                 SpriteInstanceDataArray instanceDataCollection;
@@ -29,6 +31,11 @@ namespace Framework
                 const SpriteInstanceData *getInstanceData() const;
                 unsigned int getInstanceDataCollectionSize() const;
                 unsigned int getInstanceDataCollectionSizeInBytes() const;
+                std::unique_ptr<AnimatedSprite> getAnimatedSprite(
+                    std::weak_ptr<AnimationGroup> animations,
+                    std::string startingAnimation,
+                    unsigned int framesBetweenAnimationCells
+                );
                 std::unique_ptr<BasicSprite> getBasicSprite();
                 std::unique_ptr<BasicSprite> getBasicSprite(BasicSprite sourceSprite);
                 std::unique_ptr<ScrollingSprite> getScrollingSprite(
