@@ -77,24 +77,16 @@ Framework::Sprite::AnimationMetaData Framework::Sprite::AnimationGroupManager::p
 
 Framework::Sprite::SpriteTextureCoordinates Framework::Sprite::AnimationGroupManager::parseAnimationCellData(tinyxml2::XMLElement* spriteElement, unsigned int textureAtlasWidth, unsigned int textureAtlasHeight)
 {
-    //note: need to convert from absolute pixel coordinates (stored in the xml) to UV coordinates
-    //(which are between 0 and 1)
     unsigned int x = spriteElement->UnsignedAttribute("x");
     unsigned int y = spriteElement->UnsignedAttribute("y");
     unsigned int spriteWidth = spriteElement->UnsignedAttribute("w");
     unsigned int spriteHeight = spriteElement->UnsignedAttribute("h");
 
-    glm::vec2 NDCBottomLeftCoord(x / textureAtlasWidth, y / textureAtlasHeight);
-    glm::vec2 NDCBottomRightCoord((x + spriteWidth) / textureAtlasWidth, y / textureAtlasHeight);
-    glm::vec2 NDCTopLeftCoord(x / textureAtlasWidth, (y + spriteHeight) / textureAtlasHeight);
-    glm::vec2 NDCTopRightCoord((x + spriteWidth) / textureAtlasWidth, (y + spriteHeight) / textureAtlasHeight);
+    glm::vec2 NDCTopRightCoord((float)x / textureAtlasWidth, (float)y / textureAtlasHeight);
+    glm::vec2 NDCTopLeftCoord((float)(x + spriteWidth) / textureAtlasWidth, (float)y / textureAtlasHeight);
+    glm::vec2 NDCBottomLeftCoord((float)x / textureAtlasWidth, (float)(y + spriteHeight) / textureAtlasHeight);
+    glm::vec2 NDCBottomRightCoord((float)(x + spriteWidth) / textureAtlasWidth, (float)(y + spriteHeight) / textureAtlasHeight);
 
-    //need to figure out which order to use these 4 coordinate points
-    //also, may need to reconcile coordinate systems between TexturePacker and OpenGL UV Coords
-    //x, y
-    //x+width, y
-    //x, y+width
-    //x+width, y+width
     SpriteTextureCoordinates coordinates;
     coordinates.textureCoordinate1 = NDCBottomLeftCoord; 
     coordinates.textureCoordinate2 = NDCBottomRightCoord; 

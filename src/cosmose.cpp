@@ -105,8 +105,8 @@ int main()
     Framework::Sprite::SpriteManager animatedSpriteCollection(
         textureCache.loadTexture(
             "test-images/TestBrickSpriteSheet.png",
-            GL_REPEAT,
-            GL_REPEAT,
+            GL_CLAMP_TO_BORDER,
+            GL_CLAMP_TO_BORDER,
             GL_NEAREST,
             GL_NEAREST,
             false
@@ -224,8 +224,10 @@ int main()
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         backgroundSprites[0]->advanceFrameCount();
+        animatedSprites[0]->advanceFrameCount();
         renderer.render(backgroundSpriteCollection.getInstanceData(), backgroundSpriteCollection.getSpriteTexture(), backgroundSpriteCollection.getInstanceDataCollectionSize(), backgroundSpriteCollection.getInstanceDataCollectionSizeInBytes());
         renderer.render(spriteCollection.getInstanceData(), spriteCollection.getSpriteTexture(), spriteCollection.getInstanceDataCollectionSize(), spriteCollection.getInstanceDataCollectionSizeInBytes());
+        renderer.render(animatedSpriteCollection.getInstanceData(), animatedSpriteCollection.getSpriteTexture(), animatedSpriteCollection.getInstanceDataCollectionSize(), animatedSpriteCollection.getInstanceDataCollectionSizeInBytes());
         frameCount++;
         if (frameCount % 120 == 0) {
             sprites[0] = nullptr;

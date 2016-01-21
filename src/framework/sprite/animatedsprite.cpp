@@ -15,11 +15,16 @@ Framework::Sprite::AnimatedSprite::AnimatedSprite(
     framesDrawn(0),
     currentAnimationFrameIndex(0)
 {
+    //Initialize to the first animation frame from the startingAnimation sequence
+    std::shared_ptr<AnimationGroup> animationGroup = animations.lock();
+    instanceData.textureCoordinates = animationGroup->getAnimationFrame(currentAnimation, 0);
 }
 
 void Framework::Sprite::AnimatedSprite::advanceAnimation()
 {
     std::shared_ptr<AnimationGroup> animationGroup = animations.lock();
+
+    ++currentAnimationFrameIndex;
 
     if (currentAnimationFrameIndex >= animationGroup->getAnimationData(currentAnimation).animationCellCount) {
         currentAnimationFrameIndex = 0;
