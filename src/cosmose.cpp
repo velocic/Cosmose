@@ -223,8 +223,13 @@ int main()
         }
         glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         backgroundSprites[0]->advanceFrameCount();
-        animatedSprites[0]->advanceFrameCount();
+
+        if (animatedSprites[0] != nullptr) {
+            animatedSprites[0]->advanceFrameCount();
+        }
+
         renderer.render(backgroundSpriteCollection.getInstanceData(), backgroundSpriteCollection.getSpriteTexture(), backgroundSpriteCollection.getInstanceDataCollectionSize(), backgroundSpriteCollection.getInstanceDataCollectionSizeInBytes());
         renderer.render(spriteCollection.getInstanceData(), spriteCollection.getSpriteTexture(), spriteCollection.getInstanceDataCollectionSize(), spriteCollection.getInstanceDataCollectionSizeInBytes());
         renderer.render(animatedSpriteCollection.getInstanceData(), animatedSpriteCollection.getSpriteTexture(), animatedSpriteCollection.getInstanceDataCollectionSize(), animatedSpriteCollection.getInstanceDataCollectionSizeInBytes());
@@ -240,6 +245,9 @@ int main()
         }
         if (frameCount % 480 == 0) {
             sprites[3] = nullptr;
+        }
+        if (frameCount % 600 == 0) {
+            animatedSprites[0] = nullptr;
         }
         SDL_GL_SwapWindow(window.getWindow());
     }
