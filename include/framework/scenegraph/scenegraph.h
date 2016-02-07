@@ -10,11 +10,11 @@ class SceneGraph
 {
     private:
         SceneNode rootSceneNode;
-        std::unordered_map<int, std::shared_ptr<SceneNode>> sceneNodes;
+        std::unordered_map<int, std::unique_ptr<SceneNode>> sceneNodes;
     public:
         SceneGraph();
-        const SceneNode& getRootSceneNode() const;
-        std::shared_ptr<SceneNode> getSceneNodeByID(unsigned int nodeID) const;
+        SceneNode& getRootSceneNode() const;
+        SceneNode& getSceneNodeByID(unsigned int nodeID) const;
 };
 
 #endif

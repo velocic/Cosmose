@@ -9,16 +9,16 @@
 class SceneNode
 {
     private:
-        //rotation; quaternions? euler matrix?
         unsigned int nodeID;
+        std::vector<glm::mat4> childMatrices;
         std::vector<std::shared_ptr> childSceneNodes;
         std::shared_ptr<SceneNode> parentSceneNode;
-        glm::vec2 scaleVector;
-        glm::vec2 translationVector;
+        std::unique_ptr<glm::mat4> worldMatrix;
 
     public:
-        SceneNode();
-        ~SceneNode();
+        SceneNode(unsigned int nodeID, std::shared_ptr<SceneNode> parentSceneNode);
+        void transform(glm::mat4 transformMatrix);
+        glm::mat4 &attachChildMatrix();
 };
 
 #endif
