@@ -6,15 +6,29 @@
 #include <memory>
 #include <unordered_map>
 
-class SceneGraph
+namespace Framework
 {
-    private:
-        SceneNode rootSceneNode;
-        std::unordered_map<int, std::unique_ptr<SceneNode>> sceneNodes;
-    public:
-        SceneGraph();
-        SceneNode& getRootSceneNode() const;
-        SceneNode& getSceneNodeByID(unsigned int nodeID) const;
-};
+    namespace SceneGraph
+    {
+        class SceneGraph
+        {
+            private:
+                SceneNode rootSceneNode;
+                std::unordered_map<std::size_t, std::unique_ptr<SceneNode>> sceneNodes;
+
+                friend SceneNode::attachChildNode(SceneNode *childNode);
+            public:
+                //Create a scene node at the root level, and get a handle to it
+                std::size_t createSceneNode();
+
+                //Create a scene node attached to the node with the associated nodeID
+                std::size_t createSceneNode(std::size_t nodeID);
+
+                SceneNode &getRootSceneNode() const;
+                SceneNode &getSceneNodeByID(std::size_t nodeID) const;
+        };
+    }
+}
+
 
 #endif

@@ -9,16 +9,20 @@
 class SceneNode
 {
     private:
-        unsigned int nodeID;
-        std::vector<glm::mat4> childMatrices;
-        std::vector<std::shared_ptr> childSceneNodes;
-        std::shared_ptr<SceneNode> parentSceneNode;
+        std::size_t nodeID;
+        std::vector<std::unique_ptr<glm::mat4>> childMatrices;
+        std::vector<SceneNode *> childSceneNodes;
+        SceneNode &parentSceneNode;
         std::unique_ptr<glm::mat4> worldMatrix;
 
+        void attachChildNode(SceneNode *childNode);
     public:
-        SceneNode(unsigned int nodeID, std::shared_ptr<SceneNode> parentSceneNode);
-        void transform(glm::mat4 transformMatrix);
-        glm::mat4 &attachChildMatrix();
+        SceneNode(std::size_t nodeID, SceneNode &parentSceneNode)
+            : nodeID(nodeID),
+              parentSceneNode(parentSceneNode)
+        {}
+        void attachChildMatrix(glm::mat4 &childMatrix);
+        void transform(glm::mat4 &transformMatrix);
 };
 
 #endif
