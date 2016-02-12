@@ -7,7 +7,8 @@ std::size_t Framework::SceneGraph::createSceneNode()
     sceneNodes.insert(
         {
             nodeID,
-            std::unique_ptr<SceneNode>(new SceneNode)
+            std::unique_ptr<SceneNode>(new SceneNode),
+            rootSceneNode
         }
     );
 
@@ -23,7 +24,8 @@ std::size_t Framework::SceneGraph::createSceneNode(std::size_t parentNodeID)
     sceneNodes.insert(
         {
             childNodeID,
-            std::unique_ptr<SceneNode>(new SceneNode)
+            std::unique_ptr<SceneNode>(new SceneNode),
+            rootSceneNode
         }
     );
 
@@ -36,8 +38,10 @@ std::size_t Framework::SceneGraph::createSceneNode(std::size_t parentNodeID)
 
 SceneNode &Framework::SceneGraph::getRootSceneNode() const
 {
+    return rootSceneNode;
 }
 
 SceneNode &Framework::SceneGraph::getSceneNodeByID(std::size_t nodeID) const
 {
+    return **(sceneNodes.find(nodeID));
 }
