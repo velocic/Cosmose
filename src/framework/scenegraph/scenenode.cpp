@@ -17,6 +17,7 @@ const glm::mat4 &Framework::SceneGraph::getWorldMatrix()
 void Framework::SceneGraph::transform(const glm::mat4 &transformMatrix)
 {
     worldMatrix *= transformMatrix;
+    //decompose the translate, rotate, scale and store them?
 }
 
 void Framework::SceneGraph::translate(const glm::vec2 &translation)
